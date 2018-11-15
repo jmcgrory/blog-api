@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
+import PassportControl from './config/PassportControl';
 // import mongoose from 'mongoose';
 // App Bootstrapping
 var app = express();
@@ -11,6 +12,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+var configuredPassport = new PassportControl(passport);
 // Mongoose
 /*
 mongoose.connect({
