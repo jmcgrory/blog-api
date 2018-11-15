@@ -20,8 +20,8 @@ const configuredPassport = new PassportControl(passport);
 // Mongoose
 /*
 mongoose.connect({
-    database: "mongodb://user_jamie_mcgrory:V5NOP1aUlibpsCTmXr1B@ds233895.mlab.com:33895/jmcgrory",
-    secret: "sL&2sec@IHpLLZu9xH*21Nu^i%im",
+    database: "mongodb://user_jamie_mcgrory:DATABASE.mlab.com:33895/jmcgrory",
+    secret: "SECRET",
 }, { useMongoClient: true });
 
 mongoose.connection.on('connected', () => {
