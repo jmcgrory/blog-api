@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
+// import mongoose from 'mongoose';
 // App Bootstrapping
 var app = express();
 dotenv.config();
@@ -10,6 +11,20 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+// Mongoose
+/*
+mongoose.connect({
+    database: "mongodb://user_jamie_mcgrory:V5NOP1aUlibpsCTmXr1B@ds233895.mlab.com:33895/jmcgrory",
+    secret: "sL&2sec@IHpLLZu9xH*21Nu^i%im",
+}, { useMongoClient: true });
+
+mongoose.connection.on('connected', () => {
+    console.log(`Mongoose connected to DB`);
+});
+
+mongoose.connection.on('error', (err) => {
+    console.log(err);
+});*/
 app.get('/', function (req, res) {
     res.send('Hello World');
 });
