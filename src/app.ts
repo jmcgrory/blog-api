@@ -5,6 +5,7 @@ import cors from 'cors';
 import passport from 'passport';
 import PassportControl from './config/PassportControl';
 // import mongoose from 'mongoose';
+import * as Routes from './routes';
 
 // App Bootstrapping
 
@@ -32,9 +33,15 @@ mongoose.connection.on('error', (err) => {
     console.log(err);
 });*/
 
+const routes = [
+
+
+
+];
+
 app.get('/', (req, res) => {
 
-    res.send('Hello World');
+    res.send('404');
 
 });
 

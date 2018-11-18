@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 import PassportControl from './config/PassportControl';
-// import mongoose from 'mongoose';
 // App Bootstrapping
 var app = express();
 dotenv.config();
@@ -27,7 +26,8 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.log(err);
 });*/
+var routes = [];
 app.get('/', function (req, res) {
-    res.send('Hello World');
+    res.send('404');
 });
 app.listen(process.env.PORT);
