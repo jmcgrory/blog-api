@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 import PassportControl from './config/PassportControl';
+// import mongoose from 'mongoose';
+import * as Routes from './routes';
 // App Bootstrapping
 var app = express();
 dotenv.config();
@@ -26,7 +28,16 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.log(err);
 });*/
-var routes = [];
+var routes = [
+    Routes.ArticleRoute,
+    Routes.CategoryRoute,
+];
+routes.forEach(function (Route) {
+    var url = Route.base;
+    var router = new Route().getRouter();
+    console.log(url);
+    app.use(url, router);
+});
 app.get('/', function (req, res) {
     res.send('404');
 });

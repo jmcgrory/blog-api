@@ -1,2 +1,3 @@
 import ArticleModel from './ArticleModel';
-export { ArticleModel, };
+import CategoryModel from './CategoryModel';
+export { ArticleModel, CategoryModel, };

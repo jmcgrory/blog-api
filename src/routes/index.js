@@ -1,2 +1,3 @@
 import ArticleRoute from './ArticleRoute';
-export { ArticleRoute, };
+import CategoryRoute from './CategoryRoute';
+export { ArticleRoute, CategoryRoute, };

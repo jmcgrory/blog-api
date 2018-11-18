@@ -14,7 +14,7 @@ class ArticleModel extends Model {
 
             type: Date,
 
-            // default: moment().format(), TODO: Err?
+            // default: moment.format(), TODO: Err?
 
             required: true
 

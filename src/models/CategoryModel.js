@@ -10,7 +10,7 @@ var ArticleModel = /** @class */ (function (_super) {
             // deletedAt
             createdAt: {
                 type: Date,
-                // default: moment().format(), TODO: Err?
+                // default: moment.format(), TODO: Err?
                 required: true
             }
         });
