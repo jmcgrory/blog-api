@@ -1,7 +1,35 @@
+import * as tslib_1 from "tslib";
 import { Router as ExpressRouter } from 'express';
+import RouteMethod from './RouteMethod';
+import passport from 'passport';
 var Router = /** @class */ (function () {
     function Router() {
         var _this = this;
+        this.bindRouteMethods = function () {
+            _this.getRouteMethods().forEach(function (_a) {
+                var url = _a.url, type = _a.type, value = _a.value, auth = _a.auth;
+                var handlers = [value];
+                if (auth) {
+                    handlers.unshift(passport.authenticate('jwt', { session: false }));
+                }
+                _this.router[type](url, handlers);
+            });
+        };
+        this.getDefaultRouteMethods = function () {
+            return [
+                new RouteMethod('/id', 'GET', _this.getIds),
+                new RouteMethod('/get', 'GET', _this.getModel),
+                new RouteMethod('/get-many', 'GET', _this.getModels),
+                new RouteMethod('/save', 'POST', _this.save, true),
+                new RouteMethod('/remove', 'POST', _this.remove, true),
+                new RouteMethod('/update', 'POST', _this.update, true),
+                new RouteMethod('/active', 'POST', _this.setActive, true)
+            ];
+        };
+        this.getCustomRouteMethods = function () { return []; };
+        this.getRouteMethods = function () {
+            return tslib_1.__spread(_this.getDefaultRouteMethods(), _this.getCustomRouteMethods());
+        };
         this.getIds = function (req, res, next) {
             var parameters = {};
             // TODO: Use Async?
@@ -50,12 +78,6 @@ var Router = /** @class */ (function () {
                 res.json({});
             });
         };
-        // protected getRoutes = (): Map<string, string> => {
-        //     return new Map([
-        //         ...this.defaultRoutes,
-        //         ...this.customRoutes
-        //     ]);
-        // }
         this.authenticatedRequest = function (req, res, next) {
             // TODO: Wrapper for certain requests
         };

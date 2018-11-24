@@ -8,13 +8,9 @@ class ArticleRoute extends Route {
     public static base: string = '/article';
 
     constructor() {
-
         super();
-
         this.model = this.getRouterModel();
-
         this.router.get('/getModel', this.getModel);
-
     }
 
     protected getRouterModel = (): ArticleModel => new ArticleModel();
