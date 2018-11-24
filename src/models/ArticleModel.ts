@@ -6,10 +6,6 @@ class ArticleModel extends Model {
 
     protected schema: Schema = new Schema({
 
-        // updatedAt
-
-        // deletedAt
-
         createdAt: {
 
             type: Date,

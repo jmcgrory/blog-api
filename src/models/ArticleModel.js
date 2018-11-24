@@ -6,8 +6,6 @@ var ArticleModel = /** @class */ (function (_super) {
     function ArticleModel() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.schema = new Schema({
-            // updatedAt
-            // deletedAt
             createdAt: {
                 type: Date,
                 // default: moment().format(), TODO: Err?

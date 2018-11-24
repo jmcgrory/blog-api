@@ -7,15 +7,15 @@ class CategoryRoute extends Route {
 
     public static base: string = '/category';
 
-    public getModel = (): CategoryModel => new CategoryModel();
-
     constructor() {
 
         super();
 
-        this.model = this.getModel();
+        this.model = this.getRouterModel();
 
     }
+
+    protected getRouterModel = (): CategoryModel => new CategoryModel();
 
 }
 

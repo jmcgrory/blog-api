@@ -39,6 +39,10 @@ const routes = [
 
     Routes.CategoryRoute,
 
+    Routes.UserRoute,
+
+    Routes.MediaRoute,
+
 ];
 
 routes.forEach((Route) => {
@@ -46,8 +50,6 @@ routes.forEach((Route) => {
     const url = Route.base;
 
     const router = new Route().getRouter();
-
-    console.log(url);
 
     app.use(url, router);
 

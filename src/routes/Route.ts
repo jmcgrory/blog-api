@@ -1,14 +1,6 @@
 import { Router as ExpressRouter } from 'express';
 import Model from '../models/Model';
 
-// interface RouteToModel {
-
-//     type: 'POST' | 'GET';
-
-//     method: Function;
-
-// }
-
 abstract class Router {
 
     public static base: string;
@@ -17,46 +9,113 @@ abstract class Router {
 
     protected router: ExpressRouter;
 
-    protected defaultRoutes: Map<string, string> = new Map([
-
-        ['getModel', 'GET'],
-
-    ]);
-
-    /** Extend in child to add custom model routes */
-    protected customRoutes: Map<string, string> = new Map([]);
-
     constructor() {
 
         this.router = ExpressRouter();
 
-        this.generateRoutes();
-
     }
 
-    protected generateRoutes = (): void => {
 
-        const routes = this.getRoutes();
+    protected getIds = (req, res, next): void => {
 
-        [...routes].forEach(([route, method]) => {
+        const parameters = {};
 
-            // TODO:
+        // TODO: Use Async?
+        this.model.getIds(parameters, (err, data) => {
+
+            console.log('[getIds]');
+
+            console.log(err);
+
+            res.json({});
 
         });
 
     }
 
-    protected getRoutes = (): Map<string, string> => {
+    protected getModel = (req, res, next): void => {
 
-        return new Map([
+        // TODO: Use Async?
+        this.model.getModel(1, (err, data) => {
 
-            ...this.defaultRoutes,
+            console.log('[getModel]');
 
-            ...this.customRoutes
+            console.log(err);
 
-        ]);
+            res.json({});
+
+        });
 
     }
+
+    protected getModels = (req, res, next): void => {
+
+        // TODO:
+        this.model.getModels([], (err, data) => {
+
+            console.log('[getModels]');
+
+            res.json({});
+
+        });
+
+    }
+
+    protected save = (req, res, next): void => {
+
+        // TODO:
+        this.model.save({}, (err, data) => {
+
+            res.json({});
+
+        });
+
+    }
+
+    protected remove = (req, res, next): void => {
+
+        // TODO:
+        this.model.remove(1, (err, data) => {
+
+            res.json({});
+
+        });
+
+    }
+
+    protected update = (req, res, next): void => {
+
+        // TODO:
+        this.model.update(1, {}, (err, data) => {
+
+            res.json({});
+
+        });
+
+    }
+
+    protected setActive = (req, res, next): void => {
+
+        // TODO:
+        this.model.setActive(1, true, (err, data) => {
+
+            res.json({});
+
+        });
+
+    }
+
+    // protected getRoutes = (): Map<string, string> => {
+
+    //     return new Map([
+
+    //         ...this.defaultRoutes,
+
+    //         ...this.customRoutes
+
+    //     ]);
+
+    // }
 
     protected authenticatedRequest = (req, res, next): any => {
 
@@ -64,7 +123,7 @@ abstract class Router {
 
     }
 
-    public abstract getModel = (): Model => null;
+    protected getRouterModel = (): Model => null;
 
     public getRouter = (): ExpressRouter => {
 

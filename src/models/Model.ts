@@ -63,7 +63,7 @@ abstract class Model {
      * /url/getids/{column}/{by}/{this}/.../{order}
      * 
      */
-    public static getIds = (
+    public getIds = (
         parameters: any,
         callback: Function
     ): void => {
@@ -79,7 +79,7 @@ abstract class Model {
     /**
      * Returns a Model from its identifier
      */
-    public static getModel = (id: number, callback: Function) => {
+    public getModel = (id: number, callback: Function) => {
 
         // TODO:
 
@@ -92,7 +92,7 @@ abstract class Model {
     /**
      * Returns an array of Models from a list of identifiers
      */
-    public static getModels = (ids: number[], callback: Function) => {
+    public getModels = (ids: number[], callback: Function) => {
 
         // TODO:
 
@@ -107,7 +107,7 @@ abstract class Model {
      * 
      * Will ignore any _id, createdAt etc.
      */
-    public static save = (
+    public save = (
         newModel: any,
         callback: Function
     ): void => {
@@ -123,7 +123,7 @@ abstract class Model {
     /**
      * Removes within model from an identifier
      */
-    public static remove = (
+    public remove = (
         id: number,
         callback: Function
     ): void => {
@@ -141,7 +141,7 @@ abstract class Model {
      * 
      * Will ignore any _id, createdAt etc.
      */
-    public static update = (
+    public update = (
         id: number,
         newData: any,
         callback: Function
@@ -158,7 +158,7 @@ abstract class Model {
     /**
      * Toggles a model's active state
      */
-    public static setActive = (
+    public setActive = (
         id: number,
         isActive: boolean,
         callback: Function

@@ -5,8 +5,9 @@ var ArticleRoute = /** @class */ (function (_super) {
     tslib_1.__extends(ArticleRoute, _super);
     function ArticleRoute() {
         var _this = _super.call(this) || this;
-        _this.getModel = function () { return new ArticleModel(); };
-        _this.model = _this.getModel();
+        _this.getRouterModel = function () { return new ArticleModel(); };
+        _this.model = _this.getRouterModel();
+        _this.router.get('/getModel', _this.getModel);
         return _this;
     }
     ArticleRoute.base = '/article';

@@ -1,5 +1,5 @@
 import Route from './Route';
-import { ArticleModel } from '../models';
+import { Model, ArticleModel } from '../models';
 
 class ArticleRoute extends Route {
 
@@ -7,15 +7,17 @@ class ArticleRoute extends Route {
 
     public static base: string = '/article';
 
-    public getModel = (): ArticleModel => new ArticleModel();
-
     constructor() {
 
         super();
 
-        this.model = this.getModel();
+        this.model = this.getRouterModel();
+
+        this.router.get('/getModel', this.getModel);
 
     }
+
+    protected getRouterModel = (): ArticleModel => new ArticleModel();
 
 }
 

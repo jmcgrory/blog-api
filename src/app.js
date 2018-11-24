@@ -31,11 +31,12 @@ mongoose.connection.on('error', (err) => {
 var routes = [
     Routes.ArticleRoute,
     Routes.CategoryRoute,
+    Routes.UserRoute,
+    Routes.MediaRoute,
 ];
 routes.forEach(function (Route) {
     var url = Route.base;
     var router = new Route().getRouter();
-    console.log(url);
     app.use(url, router);
 });
 app.get('/', function (req, res) {
