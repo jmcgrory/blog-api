@@ -1,5 +1,5 @@
-import Route from './Route';
-import { CategoryModel } from '../models';
+import Route from '../Route';
+import { CategoryModel } from '../../models';
 
 class CategoryRoute extends Route {
 

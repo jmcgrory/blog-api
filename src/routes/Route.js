@@ -8,22 +8,29 @@ var Router = /** @class */ (function () {
         this.bindRouteMethods = function () {
             _this.getRouteMethods().forEach(function (_a) {
                 var url = _a.url, type = _a.type, value = _a.value, auth = _a.auth;
+                var _b;
                 var handlers = [value];
                 if (auth) {
-                    handlers.unshift(passport.authenticate('jwt', { session: false }));
+                    handlers.unshift(_this.getAuthentication());
                 }
-                _this.router[type](url, handlers);
+                (_b = _this.router)[type].apply(_b, tslib_1.__spread([url], handlers));
+            });
+        };
+        this.getAuthentication = function () {
+            return passport.authenticate('jwt', {
+                session: true,
+                failureFlash: 'TEST FAILURE RESPONSE'
             });
         };
         this.getDefaultRouteMethods = function () {
             return [
-                new RouteMethod('/id', 'GET', _this.getIds),
-                new RouteMethod('/get', 'GET', _this.getModel),
-                new RouteMethod('/get-many', 'GET', _this.getModels),
-                new RouteMethod('/save', 'POST', _this.save, true),
-                new RouteMethod('/remove', 'POST', _this.remove, true),
-                new RouteMethod('/update', 'POST', _this.update, true),
-                new RouteMethod('/active', 'POST', _this.setActive, true)
+                new RouteMethod('/ids', 'get', _this.getIds),
+                new RouteMethod('/get', 'get', _this.getModel),
+                new RouteMethod('/get-many', 'get', _this.getModels),
+                new RouteMethod('/save', 'put', _this.save, true),
+                new RouteMethod('/remove', 'delete', _this.remove, true),
+                new RouteMethod('/update', 'patch', _this.update, true),
+                new RouteMethod('/active', 'patch', _this.setActive, true)
             ];
         };
         this.getCustomRouteMethods = function () { return []; };
@@ -57,6 +64,7 @@ var Router = /** @class */ (function () {
         this.save = function (req, res, next) {
             // TODO:
             _this.model.save({}, function (err, data) {
+                console.log(err);
                 res.json({});
             });
         };

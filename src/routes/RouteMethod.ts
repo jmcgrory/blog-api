@@ -1,4 +1,4 @@
-type ReqType = 'GET' | 'POST';
+type ReqType = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 class RouteMethod {
     url: string;

@@ -1,9 +1,9 @@
 import * as tslib_1 from "tslib";
-import Model from './Model';
+import Model from '../Model';
 import { Schema } from 'mongoose';
-var UserModel = /** @class */ (function (_super) {
-    tslib_1.__extends(UserModel, _super);
-    function UserModel() {
+var MediaModel = /** @class */ (function (_super) {
+    tslib_1.__extends(MediaModel, _super);
+    function MediaModel() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.schema = new Schema({
             createdAt: {
@@ -15,6 +15,6 @@ var UserModel = /** @class */ (function (_super) {
         _this.params = new Map([]);
         return _this;
     }
-    return UserModel;
+    return MediaModel;
 }(Model));
-export default UserModel;
+export default MediaModel;

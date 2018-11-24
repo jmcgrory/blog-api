@@ -1,6 +1,6 @@
 import * as tslib_1 from "tslib";
-import Route from './Route';
-import { UserModel } from '../models';
+import Route from '../Route';
+import { UserModel } from '../../models';
 var UserRoute = /** @class */ (function (_super) {
     tslib_1.__extends(UserRoute, _super);
     function UserRoute() {

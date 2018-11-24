@@ -14,7 +14,7 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session()); TODO: Not necessary?
 
 const configuredPassport = new PassportControl(passport);
 

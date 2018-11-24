@@ -1,4 +1,4 @@
-import Model from './Model';
+import Model from '../Model';
 import * as moment from 'moment';
 import mongoose, { Schema } from 'mongoose';
 

@@ -1,5 +1,5 @@
 import * as tslib_1 from "tslib";
-import Model from './Model';
+import Model from '../Model';
 import { Schema } from 'mongoose';
 var ArticleModel = /** @class */ (function (_super) {
     tslib_1.__extends(ArticleModel, _super);

@@ -1,8 +1,8 @@
-import Model from './Model';
+import Model from '../Model';
 import * as moment from 'moment';
 import mongoose, { Schema } from 'mongoose';
 
-class UserModel extends Model {
+class CategoryModel extends Model {
 
     protected schema: Schema = new Schema({
 
@@ -10,7 +10,7 @@ class UserModel extends Model {
 
             type: Date,
 
-            // default: moment().format(), TODO: Err?
+            // default: moment.format(), TODO: Err?
 
             required: true
 
@@ -22,4 +22,4 @@ class UserModel extends Model {
 
 }
 
-export default UserModel;
+export default CategoryModel;

@@ -1,5 +1,5 @@
-import Route from './Route';
-import { MediaModel } from '../models';
+import Route from '../Route';
+import { MediaModel } from '../../models';
 
 class MediaRoute extends Route {
 

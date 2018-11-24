@@ -1,5 +1,5 @@
-import Route from './Route';
-import { UserModel } from '../models';
+import Route from '../Route';
+import { UserModel } from '../../models';
 
 class UserRoute extends Route {
 

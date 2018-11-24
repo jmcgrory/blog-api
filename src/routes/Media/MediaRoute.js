@@ -1,6 +1,6 @@
 import * as tslib_1 from "tslib";
-import Route from './Route';
-import { MediaModel } from '../models';
+import Route from '../Route';
+import { MediaModel } from '../../models';
 var MediaRoute = /** @class */ (function (_super) {
     tslib_1.__extends(MediaRoute, _super);
     function MediaRoute() {

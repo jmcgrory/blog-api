@@ -1,6 +1,6 @@
 import * as tslib_1 from "tslib";
-import Route from './Route';
-import { CategoryModel } from '../models';
+import Route from '../Route';
+import { CategoryModel } from '../../models';
 var CategoryRoute = /** @class */ (function (_super) {
     tslib_1.__extends(CategoryRoute, _super);
     function CategoryRoute() {

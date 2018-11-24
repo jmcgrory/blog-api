@@ -17,24 +17,28 @@ abstract class Router {
         this.getRouteMethods().forEach(({ url, type, value, auth }) => {
             let handlers = [value];
             if (auth) {
-                handlers.unshift(
-                    passport.authenticate('jwt', { session: false })
-                )
+                handlers.unshift(this.getAuthentication())
             }
-            this.router[type](url, handlers);
+            this.router[type](url, ...handlers);
+        });
+    }
 
+    private getAuthentication = (): any => {
+        return passport.authenticate('jwt', {
+            session: true,
+            failureFlash: 'TEST FAILURE RESPONSE'
         });
     }
 
     private getDefaultRouteMethods = (): RouteMethod[] => {
         return [
-            new RouteMethod('/id', 'GET', this.getIds),
-            new RouteMethod('/get', 'GET', this.getModel),
-            new RouteMethod('/get-many', 'GET', this.getModels),
-            new RouteMethod('/save', 'POST', this.save, true),
-            new RouteMethod('/remove', 'POST', this.remove, true),
-            new RouteMethod('/update', 'POST', this.update, true),
-            new RouteMethod('/active', 'POST', this.setActive, true)
+            new RouteMethod('/ids', 'get', this.getIds),
+            new RouteMethod('/get', 'get', this.getModel),
+            new RouteMethod('/get-many', 'get', this.getModels),
+            new RouteMethod('/save', 'put', this.save, true),
+            new RouteMethod('/remove', 'delete', this.remove, true),
+            new RouteMethod('/update', 'patch', this.update, true),
+            new RouteMethod('/active', 'patch', this.setActive, true)
         ];
     }
 
@@ -77,6 +81,7 @@ abstract class Router {
     protected save = (req, res, next): void => {
         // TODO:
         this.model.save({}, (err, data) => {
+            console.log(err);
             res.json({});
         });
     }
