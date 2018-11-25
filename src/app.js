@@ -48,7 +48,6 @@ routes.forEach(function (Route) {
     app.use(url, router);
 });
 app.get('*', function (req, res) {
-    // TODO: Requires 404 Response
-    res.status(404).json(new ErrorNotice('404 - This Route Does Not Exist', 1, 'You have attempted to access a route which does not exist.').toObject());
+    res.status(404).json(new ErrorNotice('404 - This Route Does Not Exist', 1000, 'You have attempted to access a route which does not exist.').toObject());
 });
 app.listen(process.env.PORT);

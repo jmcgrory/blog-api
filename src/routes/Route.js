@@ -2,6 +2,7 @@ import * as tslib_1 from "tslib";
 import { Router as ExpressRouter } from 'express';
 import RouteMethod from './RouteMethod';
 import passport from 'passport';
+import { SuccessNotice } from '../notices';
 var Router = /** @class */ (function () {
     function Router() {
         var _this = this;
@@ -13,7 +14,13 @@ var Router = /** @class */ (function () {
                 if (auth) {
                     handlers.unshift(_this.getAuthentication());
                 }
-                (_b = _this.router)[type].apply(_b, tslib_1.__spread([url], handlers));
+                var routerMethod = _this.router[type];
+                if (typeof routerMethod === 'function') {
+                    (_b = _this.router)[type].apply(_b, tslib_1.__spread([url], handlers));
+                }
+                else {
+                    throw new Error("Cannot access request method \"" + type + "\" on router.");
+                }
             });
         };
         this.getAuthentication = function () {
@@ -62,35 +69,50 @@ var Router = /** @class */ (function () {
             console.log('[save]');
             // TODO:
             _this.model.save({}, function (err, data) {
-                console.log(err);
-                res.json({});
+                if (err) {
+                    // TODO: Decide Err and return
+                }
+                else {
+                    res.status(300).json(new SuccessNotice('Item Successfully Saved', 393901).toObject());
+                }
             });
         };
         this.remove = function (req, res, next) {
             // TODO:
             _this.model.remove(1, function (err, data) {
-                res.json({});
+                if (err) {
+                    // TODO: Decide Err and return
+                }
+                else {
+                    res.status(300).json(new SuccessNotice('Item Successfully Removed', 393902).toObject());
+                }
             });
         };
         this.update = function (req, res, next) {
             // TODO:
             _this.model.update(1, {}, function (err, data) {
-                res.json({});
+                if (err) {
+                    // TODO: Decide Err and return
+                }
+                else {
+                    res.status(300).json(new SuccessNotice('Item Successfully Updated', 393903).toObject());
+                }
             });
         };
         this.setActive = function (req, res, next) {
             // TODO:
+            var newState = true;
             _this.model.setActive(1, true, function (err, data) {
-                res.json({});
+                if (err) {
+                    // TODO: Decide Err and return
+                }
+                else {
+                    res.status(300).json(new SuccessNotice("Item is " + (newState ? 'Active' : 'Inactive'), 393904).toObject());
+                }
             });
         };
-        this.authenticatedRequest = function (req, res, next) {
-            // TODO: Wrapper for certain requests
-        };
         this.getRouterModel = function () { return null; };
-        this.getRouter = function () {
-            return _this.router;
-        };
+        this.getRouter = function () { return _this.router; };
         this.router = ExpressRouter();
     }
     return Router;

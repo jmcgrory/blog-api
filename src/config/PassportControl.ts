@@ -1,9 +1,7 @@
 import { PassportStatic } from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import JwtStrategyOptions from './JwtStrategyOptions';
-// const User = require('../models/User');
 import { UserRoute } from '../routes';
-// const config = require('../config/database');
 
 /**
  * Configures Passport

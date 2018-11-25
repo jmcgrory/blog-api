@@ -1,5 +1,4 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
-// const config = require('../config/database');
 /**
  * Configures Passport
  */

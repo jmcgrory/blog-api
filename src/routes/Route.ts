@@ -2,6 +2,7 @@ import { Router as ExpressRouter } from 'express';
 import Model from '../models/Model';
 import RouteMethod from './RouteMethod';
 import passport from 'passport';
+import { SuccessNotice } from '../notices';
 
 abstract class Router {
 
@@ -19,7 +20,12 @@ abstract class Router {
             if (auth) {
                 handlers.unshift(this.getAuthentication())
             }
-            this.router[type](url, ...handlers);
+            const routerMethod = this.router[type];
+            if (typeof routerMethod === 'function') {
+                this.router[type](url, ...handlers);
+            } else {
+                throw new Error(`Cannot access request method "${type}" on router.`);
+            }
         });
     }
 
@@ -79,41 +85,63 @@ abstract class Router {
         console.log('[save]');
         // TODO:
         this.model.save({}, (err, data) => {
-            console.log(err);
-            res.json({});
+            if (err) {
+                // TODO: Decide Err and return
+            } else {
+                res.status(300).json(new SuccessNotice(
+                    'Item Successfully Saved',
+                    393901
+                ).toObject());
+            }
         });
     }
 
     protected remove = (req, res, next): void => {
         // TODO:
         this.model.remove(1, (err, data) => {
-            res.json({});
+            if (err) {
+                // TODO: Decide Err and return
+            } else {
+                res.status(300).json(new SuccessNotice(
+                    'Item Successfully Removed',
+                    393902
+                ).toObject());
+            }
         });
     }
 
     protected update = (req, res, next): void => {
         // TODO:
         this.model.update(1, {}, (err, data) => {
-            res.json({});
+            if (err) {
+                // TODO: Decide Err and return
+            } else {
+                res.status(300).json(new SuccessNotice(
+                    'Item Successfully Updated',
+                    393903
+                ).toObject());
+            }
         });
     }
 
     protected setActive = (req, res, next): void => {
         // TODO:
+        const newState = true;
         this.model.setActive(1, true, (err, data) => {
-            res.json({});
+            if (err) {
+                // TODO: Decide Err and return
+            } else {
+                res.status(300).json(new SuccessNotice(
+                    `Item is ${newState ? 'Active' : 'Inactive'}`,
+                    393904
+                ).toObject());
+            }
         });
-    }
-
-    protected authenticatedRequest = (req, res, next): any => {
-        // TODO: Wrapper for certain requests
     }
 
     protected getRouterModel = (): Model => null;
 
-    public getRouter = (): ExpressRouter => {
-        return this.router;
-    }
+    public getRouter = (): ExpressRouter => this.router;
 
 }
 

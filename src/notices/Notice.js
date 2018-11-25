@@ -1,7 +1,7 @@
 /**
  * Abstract Notice Class
- *
  * This is designed to return a usable response for the front end
+ * @property {number} code A unique identifier for this Notice
  */
 var Notice = /** @class */ (function () {
     function Notice(title, code, description) {
