@@ -18,6 +18,8 @@ app.use(passport.initialize());
 
 const configuredPassport = new PassportControl(passport);
 
+console.log(configuredPassport);
+
 // Mongoose
 /*
 mongoose.connect({
@@ -34,25 +36,16 @@ mongoose.connection.on('error', (err) => {
 });*/
 
 const routes = [
-
     Routes.ArticleRoute,
-
     Routes.CategoryRoute,
-
     Routes.UserRoute,
-
     Routes.MediaRoute,
-
 ];
 
 routes.forEach((Route) => {
-
     const url = Route.base;
-
     const router = new Route().getRouter();
-
     app.use(url, router);
-
 });
 
 app.get('/', (req, res) => {

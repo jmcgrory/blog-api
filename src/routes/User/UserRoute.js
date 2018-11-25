@@ -10,6 +10,9 @@ var UserRoute = /** @class */ (function (_super) {
         return _this;
     }
     UserRoute.base = '/user';
+    UserRoute.authenticate = function (id, callback) {
+        return Promise.resolve({ lol: 'data' });
+    };
     return UserRoute;
 }(Route));
 export default UserRoute;

@@ -14,6 +14,7 @@ app.use(cors());
 app.use(passport.initialize());
 // app.use(passport.session()); TODO: Not necessary?
 var configuredPassport = new PassportControl(passport);
+console.log(configuredPassport);
 // Mongoose
 /*
 mongoose.connect({

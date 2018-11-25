@@ -24,10 +24,7 @@ abstract class Router {
     }
 
     private getAuthentication = (): any => {
-        return passport.authenticate('jwt', {
-            session: true,
-            failureFlash: 'TEST FAILURE RESPONSE'
-        });
+        return passport.authenticate('jwt', { session: false });
     }
 
     private getDefaultRouteMethods = (): RouteMethod[] => {
@@ -71,14 +68,15 @@ abstract class Router {
     }
 
     protected getModels = (req, res, next): void => {
+        console.log('[getModels]');
         // TODO:
         this.model.getModels([], (err, data) => {
-            console.log('[getModels]');
             res.json({});
         });
     }
 
     protected save = (req, res, next): void => {
+        console.log('[save]');
         // TODO:
         this.model.save({}, (err, data) => {
             console.log(err);

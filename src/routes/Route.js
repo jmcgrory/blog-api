@@ -17,10 +17,7 @@ var Router = /** @class */ (function () {
             });
         };
         this.getAuthentication = function () {
-            return passport.authenticate('jwt', {
-                session: true,
-                failureFlash: 'TEST FAILURE RESPONSE'
-            });
+            return passport.authenticate('jwt', { session: false });
         };
         this.getDefaultRouteMethods = function () {
             return [
@@ -55,13 +52,14 @@ var Router = /** @class */ (function () {
             });
         };
         this.getModels = function (req, res, next) {
+            console.log('[getModels]');
             // TODO:
             _this.model.getModels([], function (err, data) {
-                console.log('[getModels]');
                 res.json({});
             });
         };
         this.save = function (req, res, next) {
+            console.log('[save]');
             // TODO:
             _this.model.save({}, function (err, data) {
                 console.log(err);
