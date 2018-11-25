@@ -1,6 +1,4 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
-// const User = require('../models/User');
-import { UserRoute } from '../routes';
 // const config = require('../config/database');
 var PassportControl = /** @class */ (function () {
     function PassportControl(passport) {
@@ -11,17 +9,16 @@ var PassportControl = /** @class */ (function () {
         this.use = function (passport) {
             passport.use(new Strategy(_this.options, function (payload, done) {
                 // TODO: Placeholder implementation
-                UserRoute.authenticate(payload._id, function (err, user) {
-                    if (err) {
-                        return done(err, false); // If Error
-                    }
-                    else if (user) {
-                        return done(null, user); // If Found
-                    }
-                    else {
-                        return done(null, false); // If Not Found
-                    }
-                });
+                return done(null, { lol: 'okay' });
+                // UserRoute.authenticate(payload._id, (err, user) => {
+                //     if (err) {
+                //         return done(err, false); // If Error
+                //     } else if (user) {
+                //         return done(null, user); // If Found
+                //     } else {
+                //         return done(null, false); // If Not Found
+                //     }
+                // });
             }));
         };
         this.setOptions({
@@ -29,6 +26,7 @@ var PassportControl = /** @class */ (function () {
             secretOrKey: process.env.DB_SECRET,
         });
         this.use(passport);
+        return passport;
     }
     return PassportControl;
 }());

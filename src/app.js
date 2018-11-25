@@ -11,10 +11,21 @@ var app = express();
 dotenv.config();
 app.use(bodyParser.json());
 app.use(cors());
+// Passport Opts
 app.use(passport.initialize());
 // app.use(passport.session()); TODO: Not necessary?
+/**
+ * Configured Passport does not require passing as Static
+ */
 var configuredPassport = new PassportControl(passport);
-console.log(configuredPassport);
+/* PLACEHOLDER TOKENIZR
+const token = jwt.sign(
+    { lol: 'okay' }, // TODO: Make Unique for User...
+    process.env.DB_SECRET,
+    { expiresIn: 7200000 }, // 2 Hours
+);
+console.log(token);
+*/
 // Mongoose
 /*
 mongoose.connect({

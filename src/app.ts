@@ -6,6 +6,7 @@ import passport from 'passport';
 import PassportControl from './config/PassportControl';
 // import mongoose from 'mongoose';
 import * as Routes from './routes';
+import * as jwt from 'jsonwebtoken'; // TODO: Placeholder
 
 // App Bootstrapping
 
@@ -13,12 +14,23 @@ const app = express();
 dotenv.config();
 app.use(bodyParser.json());
 app.use(cors());
+
+// Passport Opts
 app.use(passport.initialize());
 // app.use(passport.session()); TODO: Not necessary?
-
+/**
+ * Configured Passport does not require passing as Static
+ */
 const configuredPassport = new PassportControl(passport);
 
-console.log(configuredPassport);
+/* PLACEHOLDER TOKENIZR
+const token = jwt.sign(
+    { lol: 'okay' }, // TODO: Make Unique for User...
+    process.env.DB_SECRET,
+    { expiresIn: 7200000 }, // 2 Hours
+);
+console.log(token);
+*/
 
 // Mongoose
 /*

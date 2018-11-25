@@ -15,6 +15,7 @@ class PassportControl {
             secretOrKey: process.env.DB_SECRET,
         });
         this.use(passport);
+        return passport;
     }
 
     private setOptions = (options: JwtStrategyOptions) => {
@@ -26,15 +27,16 @@ class PassportControl {
             this.options,
             (payload, done) => { // TODO: Maybe { _id }
                 // TODO: Placeholder implementation
-                UserRoute.authenticate(payload._id, (err, user) => {
-                    if (err) {
-                        return done(err, false); // If Error
-                    } else if (user) {
-                        return done(null, user); // If Found
-                    } else {
-                        return done(null, false); // If Not Found
-                    }
-                });
+                return done(null, { lol: 'okay' });
+                // UserRoute.authenticate(payload._id, (err, user) => {
+                //     if (err) {
+                //         return done(err, false); // If Error
+                //     } else if (user) {
+                //         return done(null, user); // If Found
+                //     } else {
+                //         return done(null, false); // If Not Found
+                //     }
+                // });
             }
         ))
     };
