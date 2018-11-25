@@ -4,8 +4,8 @@ import { Model, ArticleModel } from '../../models';
 class ArticleRoute extends Route {
 
     protected model: ArticleModel;
-
     public static base: string = '/article';
+    protected useDefaultMethods: boolean = true;
 
     constructor() {
         super();

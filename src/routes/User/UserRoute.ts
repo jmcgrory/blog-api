@@ -1,10 +1,12 @@
 import Route from '../Route';
 import { UserModel } from '../../models';
+import RouteMethod from '../RouteMethod';
 
 class UserRoute extends Route {
 
     protected model: UserModel;
     public static base: string = '/user';
+    protected useDefaultMethods: boolean = false;
 
     constructor() {
         super();

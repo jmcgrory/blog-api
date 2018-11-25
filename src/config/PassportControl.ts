@@ -13,7 +13,7 @@ class PassportControl {
     constructor(passport: PassportStatic) {
         this.setOptions({
             jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-            secretOrKey: process.env.DB_SECRET,
+            secretOrKey: process.env.PASSPORT_SECRET,
         });
         this.use(passport);
     }

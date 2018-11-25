@@ -2,8 +2,7 @@ import mongoose, { Schema } from 'mongoose';
 
 /**
  * Base Model Class
- * 
- * Contains core Model behaviours
+ * Contains Core Model Behaviours
  */
 abstract class Model {
 
@@ -26,17 +25,11 @@ abstract class Model {
      * TODO:
      */
     protected static by: Map<string, any> = new Map([
-
         ['is', null],
-
         ['isnt', null],
-
         ['contains', null],
-
         ['before', null],
-
         ['after', null]
-
     ]);
 
     /**
@@ -46,11 +39,8 @@ abstract class Model {
      * TODO:
      */
     protected static order: Map<string, any> = new Map([
-
         ['ASC', null],
-
         ['DESC', null]
-
     ]);
 
     /**
@@ -67,39 +57,27 @@ abstract class Model {
         parameters: any,
         callback: Function
     ): void => {
-
         // TODO:
-
         console.log(parameters);
-
         callback();
-
     }
 
     /**
      * Returns a Model from its identifier
      */
     public getModel = (id: number, callback: Function) => {
-
         // TODO:
-
         console.log(id);
-
         callback();
-
     }
 
     /**
      * Returns an array of Models from a list of identifiers
      */
     public getModels = (ids: number[], callback: Function) => {
-
         // TODO:
-
         console.log(ids);
-
         callback();
-
     }
 
     /**
@@ -111,13 +89,9 @@ abstract class Model {
         newModel: any,
         callback: Function
     ): void => {
-
         // TODO:
-
         console.log(newModel);
-
         callback();
-
     }
 
     /**
@@ -127,13 +101,9 @@ abstract class Model {
         id: number,
         callback: Function
     ): void => {
-
         // TODO:
-
         console.log(id);
-
         callback();
-
     }
 
     /**
@@ -146,13 +116,9 @@ abstract class Model {
         newData: any,
         callback: Function
     ): void => {
-
         // TODO:
-
         console.log(id, newData);
-
         callback();
-
     }
 
     /**
@@ -163,13 +129,9 @@ abstract class Model {
         isActive: boolean,
         callback: Function
     ): void => {
-
         // TODO:
-
         console.log(id, isActive);
-
         callback();
-
     }
 
 }

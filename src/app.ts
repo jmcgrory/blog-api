@@ -21,14 +21,14 @@ app.use(passport.initialize());
 // app.use(passport.session()); TODO: Not necessary?
 new PassportControl(passport);
 
-/* PLACEHOLDER TOKENIZR
-const token = jwt.sign(
-    { lol: 'okay' }, // TODO: Make Unique for User...
-    process.env.DB_SECRET,
-    { expiresIn: 7200000 }, // 2 Hours
-);
-console.log(token);
-*/
+/* PLACEHOLDER TOKENIZR */
+// const token = jwt.sign(
+//     { lol: 'okay' }, // TODO: Make Unique for User...
+//     process.env.PASSPORT_SECRET,
+//     { expiresIn: 7200000 }, // 2 Hours
+// );
+// console.log(token);
+
 
 // Mongoose
 /*
@@ -54,6 +54,10 @@ routes.forEach((Route) => {
     const url = Route.base;
     const router = new Route().getRouter();
     app.use(url, router);
+});
+
+app.get('/ping', (req, res) => {
+    res.status(200);
 });
 
 app.get('*', (req, res) => {

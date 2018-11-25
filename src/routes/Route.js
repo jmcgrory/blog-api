@@ -2,7 +2,7 @@ import * as tslib_1 from "tslib";
 import { Router as ExpressRouter } from 'express';
 import RouteMethod from './RouteMethod';
 import passport from 'passport';
-import { SuccessNotice } from '../notices';
+import { SuccessNotice, ErrorNotice } from '../notices';
 var Router = /** @class */ (function () {
     function Router() {
         var _this = this;
@@ -38,8 +38,9 @@ var Router = /** @class */ (function () {
             ];
         };
         this.getCustomRouteMethods = function () { return []; };
-        this.getRouteMethods = function () {
-            return tslib_1.__spread(_this.getDefaultRouteMethods(), _this.getCustomRouteMethods());
+        this.getRouteMethods = function (useDefaults) {
+            if (useDefaults === void 0) { useDefaults = true; }
+            return tslib_1.__spread((useDefaults) ? _this.getDefaultRouteMethods() : [], _this.getCustomRouteMethods());
         };
         this.getIds = function (req, res, next) {
             var parameters = {};
@@ -73,7 +74,7 @@ var Router = /** @class */ (function () {
                     // TODO: Decide Err and return
                 }
                 else {
-                    res.status(300).json(new SuccessNotice('Item Successfully Saved', 393901).toObject());
+                    res.json(new SuccessNotice('Item Successfully Saved', 393901).toObject());
                 }
             });
         };
@@ -84,7 +85,7 @@ var Router = /** @class */ (function () {
                     // TODO: Decide Err and return
                 }
                 else {
-                    res.status(300).json(new SuccessNotice('Item Successfully Removed', 393902).toObject());
+                    res.json(new SuccessNotice('Item Successfully Removed', 393902).toObject());
                 }
             });
         };
@@ -95,7 +96,7 @@ var Router = /** @class */ (function () {
                     // TODO: Decide Err and return
                 }
                 else {
-                    res.status(300).json(new SuccessNotice('Item Successfully Updated', 393903).toObject());
+                    res.json(new SuccessNotice('Item Successfully Updated', 393903).toObject());
                 }
             });
         };
@@ -107,12 +108,18 @@ var Router = /** @class */ (function () {
                     // TODO: Decide Err and return
                 }
                 else {
-                    res.status(300).json(new SuccessNotice("Item is " + (newState ? 'Active' : 'Inactive'), 393904).toObject());
+                    res.json(new SuccessNotice("Item is " + (newState ? 'Active' : 'Inactive'), 393904).toObject());
                 }
             });
         };
         this.getRouterModel = function () { return null; };
         this.getRouter = function () { return _this.router; };
+        /**
+         * Use when overriding an unavailable route within customRouteMethods
+         */
+        this.routeMethodUnavailable = function (req, res, next) {
+            res.status(404).json(new ErrorNotice('404 - This Route Does Not Exist', 393905, 'You have attempted to access a route which does not exist.').toObject());
+        };
         this.router = ExpressRouter();
     }
     return Router;

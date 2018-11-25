@@ -2,7 +2,7 @@ import { Router as ExpressRouter } from 'express';
 import Model from '../models/Model';
 import RouteMethod from './RouteMethod';
 import passport from 'passport';
-import { SuccessNotice } from '../notices';
+import { SuccessNotice, ErrorNotice } from '../notices';
 
 abstract class Router {
 
@@ -47,9 +47,9 @@ abstract class Router {
 
     protected getCustomRouteMethods = (): RouteMethod[] => [];
 
-    private getRouteMethods = (): RouteMethod[] => {
+    private getRouteMethods = (useDefaults: boolean = true): RouteMethod[] => {
         return [
-            ...this.getDefaultRouteMethods(),
+            ...(useDefaults) ? this.getDefaultRouteMethods() : [],
             ...this.getCustomRouteMethods()
         ];
     }
@@ -88,7 +88,7 @@ abstract class Router {
             if (err) {
                 // TODO: Decide Err and return
             } else {
-                res.status(300).json(new SuccessNotice(
+                res.json(new SuccessNotice(
                     'Item Successfully Saved',
                     393901
                 ).toObject());
@@ -102,7 +102,7 @@ abstract class Router {
             if (err) {
                 // TODO: Decide Err and return
             } else {
-                res.status(300).json(new SuccessNotice(
+                res.json(new SuccessNotice(
                     'Item Successfully Removed',
                     393902
                 ).toObject());
@@ -116,7 +116,7 @@ abstract class Router {
             if (err) {
                 // TODO: Decide Err and return
             } else {
-                res.status(300).json(new SuccessNotice(
+                res.json(new SuccessNotice(
                     'Item Successfully Updated',
                     393903
                 ).toObject());
@@ -131,7 +131,7 @@ abstract class Router {
             if (err) {
                 // TODO: Decide Err and return
             } else {
-                res.status(300).json(new SuccessNotice(
+                res.json(new SuccessNotice(
                     `Item is ${newState ? 'Active' : 'Inactive'}`,
                     393904
                 ).toObject());
@@ -142,6 +142,17 @@ abstract class Router {
     protected getRouterModel = (): Model => null;
 
     public getRouter = (): ExpressRouter => this.router;
+
+    /**
+     * Use when overriding an unavailable route within customRouteMethods
+     */
+    protected routeMethodUnavailable = (req, res, next): void => {
+        res.status(404).json(new ErrorNotice(
+            '404 - This Route Does Not Exist',
+            393905,
+            'You have attempted to access a route which does not exist.'
+        ).toObject());
+    }
 
 }
 

@@ -1,7 +1,6 @@
 /**
  * Base Model Class
- *
- * Contains core Model behaviours
+ * Contains Core Model Behaviours
  */
 var Model = /** @class */ (function () {
     function Model() {
