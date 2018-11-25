@@ -1,5 +1,8 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
 // const config = require('../config/database');
+/**
+ * Configures Passport
+ */
 var PassportControl = /** @class */ (function () {
     function PassportControl(passport) {
         var _this = this;
@@ -26,7 +29,6 @@ var PassportControl = /** @class */ (function () {
             secretOrKey: process.env.DB_SECRET,
         });
         this.use(passport);
-        return passport;
     }
     return PassportControl;
 }());

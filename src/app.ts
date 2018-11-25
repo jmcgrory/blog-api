@@ -6,7 +6,8 @@ import passport from 'passport';
 import PassportControl from './config/PassportControl';
 // import mongoose from 'mongoose';
 import * as Routes from './routes';
-import * as jwt from 'jsonwebtoken'; // TODO: Placeholder
+import * as jwt from 'jsonwebtoken'; // TODO: PLACEHOLDER TOKENIZR
+import { ErrorNotice } from './notices';
 
 // App Bootstrapping
 
@@ -18,10 +19,7 @@ app.use(cors());
 // Passport Opts
 app.use(passport.initialize());
 // app.use(passport.session()); TODO: Not necessary?
-/**
- * Configured Passport does not require passing as Static
- */
-const configuredPassport = new PassportControl(passport);
+new PassportControl(passport);
 
 /* PLACEHOLDER TOKENIZR
 const token = jwt.sign(
@@ -38,11 +36,9 @@ mongoose.connect({
     database: "mongodb://user_jamie_mcgrory:DATABASE.mlab.com:33895/jmcgrory",
     secret: "SECRET",
 }, { useMongoClient: true });
-
 mongoose.connection.on('connected', () => {
     console.log(`Mongoose connected to DB`);
 });
-
 mongoose.connection.on('error', (err) => {
     console.log(err);
 });*/
@@ -60,9 +56,16 @@ routes.forEach((Route) => {
     app.use(url, router);
 });
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
 
-    res.send('404');
+    // TODO: Requires 404 Response
+    res.status(404).json(
+        new ErrorNotice(
+            '404 - This Route Does Not Exist',
+            1,
+            'You have attempted to access a route which does not exist.'
+        ).toObject()
+    );
 
 });
 

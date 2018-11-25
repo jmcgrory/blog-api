@@ -5,6 +5,9 @@ import JwtStrategyOptions from './JwtStrategyOptions';
 import { UserRoute } from '../routes';
 // const config = require('../config/database');
 
+/**
+ * Configures Passport
+ */
 class PassportControl {
 
     private options: JwtStrategyOptions;
@@ -15,7 +18,6 @@ class PassportControl {
             secretOrKey: process.env.DB_SECRET,
         });
         this.use(passport);
-        return passport;
     }
 
     private setOptions = (options: JwtStrategyOptions) => {
