@@ -4,10 +4,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 import PassportControl from './config/PassportControl';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import * as Routes from './routes';
 import * as jwt from 'jsonwebtoken'; // TODO: PLACEHOLDER TOKENIZR
-import { ErrorNotice } from './notices';
+import { ErrorNotice, SuccessNotice } from './notices';
 
 // App Bootstrapping
 
@@ -29,23 +29,23 @@ new PassportControl(passport);
 // );
 // console.log(token);
 
-
 // Mongoose
-/*
-mongoose.connect({
-    database: "mongodb://user_jamie_mcgrory:DATABASE.mlab.com:33895/jmcgrory",
-    secret: "SECRET",
-}, { useMongoClient: true });
+
+const connection = `mongodb://${process.env.DB_HOST}:${process.env.DB_URI}/jmcgr`;
+
+mongoose.connect(connection, { useNewUrlParser: true });
+
 mongoose.connection.on('connected', () => {
-    console.log(`Mongoose connected to DB`);
+    console.log(`> mongoose connected on ${process.env.DB_URI}`);
 });
+
 mongoose.connection.on('error', (err) => {
     console.log(err);
-});*/
+});
 
 const routes = [
     Routes.ArticleRoute,
-    Routes.CategoryRoute,
+    Routes.GroupRoute,
     Routes.UserRoute,
     Routes.MediaRoute,
 ];
@@ -57,7 +57,7 @@ routes.forEach((Route) => {
 });
 
 app.get('/ping', (req, res) => {
-    res.status(200);
+    res.status(200).json(new SuccessNotice('Application is running.'));
 });
 
 app.get('*', (req, res) => {
@@ -69,3 +69,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(process.env.PORT);
+
+console.log(`[API running on ${process.env.PORT}]`);

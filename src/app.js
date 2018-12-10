@@ -4,9 +4,9 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import passport from 'passport';
 import PassportControl from './config/PassportControl';
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import * as Routes from './routes';
-import { ErrorNotice } from './notices';
+import { ErrorNotice, SuccessNotice } from './notices';
 // App Bootstrapping
 var app = express();
 dotenv.config();
@@ -24,20 +24,17 @@ new PassportControl(passport);
 // );
 // console.log(token);
 // Mongoose
-/*
-mongoose.connect({
-    database: "mongodb://user_jamie_mcgrory:DATABASE.mlab.com:33895/jmcgrory",
-    secret: "SECRET",
-}, { useMongoClient: true });
-mongoose.connection.on('connected', () => {
-    console.log(`Mongoose connected to DB`);
+var connection = "mongodb://" + process.env.DB_HOST + ":" + process.env.DB_URI + "/jmcgr";
+mongoose.connect(connection, { useNewUrlParser: true });
+mongoose.connection.on('connected', function () {
+    console.log("> mongoose connected on " + process.env.DB_URI);
 });
-mongoose.connection.on('error', (err) => {
+mongoose.connection.on('error', function (err) {
     console.log(err);
-});*/
+});
 var routes = [
     Routes.ArticleRoute,
-    Routes.CategoryRoute,
+    Routes.GroupRoute,
     Routes.UserRoute,
     Routes.MediaRoute,
 ];
@@ -47,9 +44,10 @@ routes.forEach(function (Route) {
     app.use(url, router);
 });
 app.get('/ping', function (req, res) {
-    res.status(200);
+    res.status(200).json(new SuccessNotice('Application is running.'));
 });
 app.get('*', function (req, res) {
     res.status(404).json(new ErrorNotice('404 - This Route Does Not Exist', 1000, 'You have attempted to access a route which does not exist.').toObject());
 });
 app.listen(process.env.PORT);
+console.log("[API running on " + process.env.PORT + "]");
