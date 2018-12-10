@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
 /**
  * Base Model Class
@@ -7,48 +7,20 @@ import mongoose, { Schema } from 'mongoose';
 abstract class Model {
 
     /**
-     * Needs to be set on every model (abstract?)
+     * @todo update type to mongoose
      */
-    protected abstract schema: Schema;
+    protected model: any;
 
-    /**
-     * Also needs to be set on every model (abstract?)
-     * 
-     * e.g. [
-     *  [ 'name', Handler? ]
-     * ]
-     */
-    protected abstract params: Map<string, any>;
-
-    /**
-     * Temporary undecided
-     * TODO:
-     */
-    protected static by: Map<string, any> = new Map([
-        ['is', null],
-        ['isnt', null],
-        ['contains', null],
-        ['before', null],
-        ['after', null]
-    ]);
-
-    /**
-     * Also temp
-     * defaults to...
-     * dates will have to be handled differently to...
-     * TODO:
-     */
-    protected static order: Map<string, any> = new Map([
-        ['ASC', null],
-        ['DESC', null]
-    ]);
+    constructor(MongoModel: any) {
+        this.model = MongoModel;
+    }
 
     /**
      * Finds an exhaustive array of identifiers that match
      * 
      * Requests without parameters will return all active
      * 
-     * TODO: parameters will be of type xyz
+     * @todo parameters will be handled by new SearchParams()
      * 
      * /url/getids/{column}/{by}/{this}/.../{order}
      * 
@@ -57,27 +29,25 @@ abstract class Model {
         parameters: any,
         callback: Function
     ): void => {
-        // TODO:
-        console.log(parameters);
-        callback();
+        this.model.find({}, '_id').exec(callback);
     }
 
     /**
      * Returns a Model from its identifier
      */
-    public getModel = (id: number, callback: Function) => {
-        // TODO:
-        console.log(id);
-        callback();
+    public getModel = (id: string, callback: Function) => {
+        this.model.findById(id).exec(callback);
     }
 
     /**
      * Returns an array of Models from a list of identifiers
      */
-    public getModels = (ids: number[], callback: Function) => {
-        // TODO:
-        console.log(ids);
-        callback();
+    public getModels = (ids: string[], callback: Function) => {
+        this.model.find({
+            _id: {
+                $in: ids.map((id) => mongoose.Types.ObjectId(id))
+            }
+        }).exec(callback);
     }
 
     /**
@@ -86,24 +56,22 @@ abstract class Model {
      * Will ignore any _id, createdAt etc.
      */
     public save = (
-        newModel: any,
+        modelData: any,
         callback: Function
     ): void => {
-        // TODO:
-        console.log(newModel);
-        callback();
+        const NewModel = this.model;
+        const newModel = new NewModel(modelData);
+        newModel.save(callback);
     }
 
     /**
      * Removes within model from an identifier
      */
     public remove = (
-        id: number,
+        id: string,
         callback: Function
     ): void => {
-        // TODO:
-        console.log(id);
-        callback();
+        this.model.findByIdAndDelete(id).exec(callback);
     }
 
     /**
@@ -112,26 +80,24 @@ abstract class Model {
      * Will ignore any _id, createdAt etc.
      */
     public update = (
-        id: number,
+        id: string,
         newData: any,
         callback: Function
     ): void => {
-        // TODO:
-        console.log(id, newData);
-        callback();
+        this.model.findByIdAndUpdate(id, newData).exec(callback);
     }
 
     /**
      * Toggles a model's active state
      */
     public setActive = (
-        id: number,
+        id: string,
         isActive: boolean,
         callback: Function
     ): void => {
-        // TODO:
-        console.log(id, isActive);
-        callback();
+        this.model.findByIdAndUpdate(id, {
+            isActive: isActive
+        }).exec(callback);
     }
 
 }

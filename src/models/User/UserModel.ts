@@ -5,17 +5,11 @@ import mongoose, { Schema } from 'mongoose';
 class UserModel extends Model {
 
     protected schema: Schema = new Schema({
-
         createdAt: {
-
             type: Date,
-
             // default: moment().format(), TODO: Err?
-
             required: true
-
         }
-
     });
 
     protected params: Map<string, any> = new Map([]);

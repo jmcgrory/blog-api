@@ -1,6 +1,6 @@
 import Model from './Model';
 import ArticleModel from './Article/ArticleModel';
-import CategoryModel from './Category/CategoryModel';
+import GroupModel from './Group/GroupModel';
 import UserModel from './User/UserModel';
 import MediaModel from './Media/MediaModel';
-export { Model, ArticleModel, CategoryModel, UserModel, MediaModel, };
+export { Model, ArticleModel, GroupModel, UserModel, MediaModel, };
