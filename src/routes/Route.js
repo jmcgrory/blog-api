@@ -38,10 +38,14 @@ var Router = /** @class */ (function () {
             ];
         };
         this.getCustomRouteMethods = function () { return []; };
-        this.getRouteMethods = function (useDefaults) {
-            if (useDefaults === void 0) { useDefaults = true; }
-            return tslib_1.__spread((useDefaults) ? _this.getDefaultRouteMethods() : [], _this.getCustomRouteMethods());
+        this.getRouteMethods = function () {
+            return tslib_1.__spread((_this.useDefaultMethods) ? _this.getDefaultRouteMethods() : [], _this.getCustomRouteMethods(), [
+                new RouteMethod('/*', 'get', _this.routeMethodUnavailable),
+            ]);
         };
+        /**
+         * @todo handle errs
+         */
         this.getIds = function (req, res, next) {
             var parameters = {};
             // TODO: Use Async?
@@ -51,14 +55,20 @@ var Router = /** @class */ (function () {
                 res.json({});
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.getModel = function (req, res, next) {
-            // TODO: Use Async?
-            _this.model.getModel(1, function (err, data) {
+            var id = req.body.id;
+            _this.model.getModel(id, function (err, data) {
                 console.log('[getModel]');
                 console.log(err);
-                res.json({});
+                res.json(data);
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.getModels = function (req, res, next) {
             console.log('[getModels]');
             // TODO:
@@ -66,6 +76,9 @@ var Router = /** @class */ (function () {
                 res.json({});
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.save = function (req, res, next) {
             console.log('[save]');
             // TODO:
@@ -78,9 +91,13 @@ var Router = /** @class */ (function () {
                 }
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.remove = function (req, res, next) {
+            var id = req.body.id;
             // TODO:
-            _this.model.remove(1, function (err, data) {
+            _this.model.remove(id, function (err, data) {
                 if (err) {
                     // TODO: Decide Err and return
                 }
@@ -89,9 +106,13 @@ var Router = /** @class */ (function () {
                 }
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.update = function (req, res, next) {
-            // TODO:
-            _this.model.update(1, {}, function (err, data) {
+            var id = req.body.id;
+            // TODO: req.body.data?
+            _this.model.update(id, {}, function (err, data) {
                 if (err) {
                     // TODO: Decide Err and return
                 }
@@ -100,10 +121,14 @@ var Router = /** @class */ (function () {
                 }
             });
         };
+        /**
+         * @todo handle errs
+         */
         this.setActive = function (req, res, next) {
+            var id = req.body.id;
             // TODO:
             var newState = true;
-            _this.model.setActive(1, true, function (err, data) {
+            _this.model.setActive(id, true, function (err, data) {
                 if (err) {
                     // TODO: Decide Err and return
                 }

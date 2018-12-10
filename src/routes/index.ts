@@ -1,16 +1,11 @@
 import ArticleRoute from './Article/ArticleRoute';
-import CategoryRoute from './Category/CategoryRoute';
+import GroupRoute from './Group/GroupRoute';
 import UserRoute from './User/UserRoute';
 import MediaRoute from './Media/MediaRoute';
 
 export {
-
     ArticleRoute,
-
-    CategoryRoute,
-
+    GroupRoute,
     UserRoute,
-
     MediaRoute,
-
 }

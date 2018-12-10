@@ -7,8 +7,10 @@ import { SuccessNotice, ErrorNotice } from '../notices';
 abstract class Router {
 
     public static base: string;
+    protected abstract name: string;
     protected model: Model;
     protected router: ExpressRouter;
+    protected abstract useDefaultMethods: boolean;
 
     constructor() {
         this.router = ExpressRouter();
@@ -47,13 +49,17 @@ abstract class Router {
 
     protected getCustomRouteMethods = (): RouteMethod[] => [];
 
-    private getRouteMethods = (useDefaults: boolean = true): RouteMethod[] => {
+    private getRouteMethods = (): RouteMethod[] => {
         return [
-            ...(useDefaults) ? this.getDefaultRouteMethods() : [],
-            ...this.getCustomRouteMethods()
+            ...(this.useDefaultMethods) ? this.getDefaultRouteMethods() : [],
+            ...this.getCustomRouteMethods(),
+            new RouteMethod('/*', 'get', this.routeMethodUnavailable),
         ];
     }
 
+    /**
+     * @todo handle errs
+     */
     protected getIds = (req, res, next): void => {
         const parameters = {};
         // TODO: Use Async?
@@ -64,15 +70,21 @@ abstract class Router {
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected getModel = (req, res, next): void => {
-        // TODO: Use Async?
-        this.model.getModel(1, (err, data) => {
+        const id = req.body.id;
+        this.model.getModel(id, (err, data) => {
             console.log('[getModel]');
             console.log(err);
-            res.json({});
+            res.json(data);
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected getModels = (req, res, next): void => {
         console.log('[getModels]');
         // TODO:
@@ -81,6 +93,9 @@ abstract class Router {
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected save = (req, res, next): void => {
         console.log('[save]');
         // TODO:
@@ -96,9 +111,13 @@ abstract class Router {
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected remove = (req, res, next): void => {
+        const id = req.body.id;
         // TODO:
-        this.model.remove(1, (err, data) => {
+        this.model.remove(id, (err, data) => {
             if (err) {
                 // TODO: Decide Err and return
             } else {
@@ -110,9 +129,13 @@ abstract class Router {
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected update = (req, res, next): void => {
-        // TODO:
-        this.model.update(1, {}, (err, data) => {
+        const id = req.body.id;
+        // TODO: req.body.data?
+        this.model.update(id, {}, (err, data) => {
             if (err) {
                 // TODO: Decide Err and return
             } else {
@@ -124,10 +147,14 @@ abstract class Router {
         });
     }
 
+    /**
+     * @todo handle errs
+     */
     protected setActive = (req, res, next): void => {
+        const id = req.body.id;
         // TODO:
         const newState = true;
-        this.model.setActive(1, true, (err, data) => {
+        this.model.setActive(id, true, (err, data) => {
             if (err) {
                 // TODO: Decide Err and return
             } else {
