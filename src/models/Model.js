@@ -17,6 +17,7 @@ var Model = /** @class */ (function () {
          *
          */
         this.getIds = function (parameters, callback) {
+            console.log(parameters);
             _this.model.find({}, '_id').exec(callback);
         };
         /**

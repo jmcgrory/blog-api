@@ -29,6 +29,7 @@ abstract class Model {
         parameters: any,
         callback: Function
     ): void => {
+        console.log(parameters);
         this.model.find({}, '_id').exec(callback);
     }
 

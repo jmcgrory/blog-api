@@ -61,12 +61,11 @@ abstract class Router {
      * @todo handle errs
      */
     protected getIds = (req, res, next): void => {
+        console.log('query', req.query);
         const parameters = {};
         // TODO: Use Async?
         this.model.getIds(parameters, (err, data) => {
-            console.log('[getIds]');
-            console.log(err);
-            res.json({});
+            res.json(data);
         });
     }
 
@@ -89,7 +88,7 @@ abstract class Router {
         console.log('[getModels]');
         // TODO:
         this.model.getModels([], (err, data) => {
-            res.json({});
+            res.json(data);
         });
     }
 
@@ -97,14 +96,15 @@ abstract class Router {
      * @todo handle errs
      */
     protected save = (req, res, next): void => {
-        console.log('[save]');
-        // TODO:
-        this.model.save({}, (err, data) => {
+        this.model.save(req.body, (err, data) => {
             if (err) {
-                // TODO: Decide Err and return
+                res.json(new ErrorNotice(
+                    'This Item could not be saved.',
+                    73282
+                ).toObject());
             } else {
                 res.json(new SuccessNotice(
-                    'Item Successfully Saved',
+                    'Item successfully saved',
                     393901
                 ).toObject());
             }
@@ -115,15 +115,16 @@ abstract class Router {
      * @todo handle errs
      */
     protected remove = (req, res, next): void => {
-        const id = req.body.id;
-        // TODO:
+        const id = req.query.id;
         this.model.remove(id, (err, data) => {
             if (err) {
-                // TODO: Decide Err and return
+                res.json(new ErrorNotice(
+                    'Item could not be removed.'
+                ).toObject());
             } else {
                 res.json(new SuccessNotice(
-                    'Item Successfully Removed',
-                    393902
+                    'Item successfully removed',
+                    454555
                 ).toObject());
             }
         });
@@ -133,15 +134,18 @@ abstract class Router {
      * @todo handle errs
      */
     protected update = (req, res, next): void => {
-        const id = req.body.id;
-        // TODO: req.body.data?
-        this.model.update(id, {}, (err, data) => {
+        const id = req.query.id;
+        const newData = req.query.body;
+        this.model.update(id, newData, (err, data) => {
             if (err) {
-                // TODO: Decide Err and return
+                res.json(new ErrorNotice(
+                    'Item could not be updated.',
+                    923238
+                ).toObject());
             } else {
                 res.json(new SuccessNotice(
-                    'Item Successfully Updated',
-                    393903
+                    'Item successfully updated.',
+                    422344
                 ).toObject());
             }
         });
@@ -151,16 +155,18 @@ abstract class Router {
      * @todo handle errs
      */
     protected setActive = (req, res, next): void => {
-        const id = req.body.id;
-        // TODO:
-        const newState = true;
-        this.model.setActive(id, true, (err, data) => {
+        const id = req.query.id;
+        const newState = req.query.active === 'true';
+        this.model.setActive(id, newState, (err, data) => {
             if (err) {
-                // TODO: Decide Err and return
+                res.json(new ErrorNotice(
+                    `Item active status could not be updated.`,
+                    427847
+                ).toObject());
             } else {
                 res.json(new SuccessNotice(
-                    `Item is ${newState ? 'Active' : 'Inactive'}`,
-                    393904
+                    `Item is now ${newState ? 'active' : 'inactive'}`,
+                    943399
                 ).toObject());
             }
         });

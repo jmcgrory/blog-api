@@ -47,12 +47,11 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.getIds = function (req, res, next) {
+            console.log('query', req.query);
             var parameters = {};
             // TODO: Use Async?
             _this.model.getIds(parameters, function (err, data) {
-                console.log('[getIds]');
-                console.log(err);
-                res.json({});
+                res.json(data);
             });
         };
         /**
@@ -73,21 +72,19 @@ var Router = /** @class */ (function () {
             console.log('[getModels]');
             // TODO:
             _this.model.getModels([], function (err, data) {
-                res.json({});
+                res.json(data);
             });
         };
         /**
          * @todo handle errs
          */
         this.save = function (req, res, next) {
-            console.log('[save]');
-            // TODO:
-            _this.model.save({}, function (err, data) {
+            _this.model.save(req.body, function (err, data) {
                 if (err) {
-                    // TODO: Decide Err and return
+                    res.json(new ErrorNotice('This Item could not be saved.', 73282).toObject());
                 }
                 else {
-                    res.json(new SuccessNotice('Item Successfully Saved', 393901).toObject());
+                    res.json(new SuccessNotice('Item successfully saved', 393901).toObject());
                 }
             });
         };
@@ -95,14 +92,13 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.remove = function (req, res, next) {
-            var id = req.body.id;
-            // TODO:
+            var id = req.query.id;
             _this.model.remove(id, function (err, data) {
                 if (err) {
-                    // TODO: Decide Err and return
+                    res.json(new ErrorNotice('Item could not be removed.').toObject());
                 }
                 else {
-                    res.json(new SuccessNotice('Item Successfully Removed', 393902).toObject());
+                    res.json(new SuccessNotice('Item successfully removed', 454555).toObject());
                 }
             });
         };
@@ -110,14 +106,14 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.update = function (req, res, next) {
-            var id = req.body.id;
-            // TODO: req.body.data?
-            _this.model.update(id, {}, function (err, data) {
+            var id = req.query.id;
+            var newData = req.query.body;
+            _this.model.update(id, newData, function (err, data) {
                 if (err) {
-                    // TODO: Decide Err and return
+                    res.json(new ErrorNotice('Item could not be updated.', 923238).toObject());
                 }
                 else {
-                    res.json(new SuccessNotice('Item Successfully Updated', 393903).toObject());
+                    res.json(new SuccessNotice('Item successfully updated.', 422344).toObject());
                 }
             });
         };
@@ -125,15 +121,14 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.setActive = function (req, res, next) {
-            var id = req.body.id;
-            // TODO:
-            var newState = true;
-            _this.model.setActive(id, true, function (err, data) {
+            var id = req.query.id;
+            var newState = req.query.active === 'true';
+            _this.model.setActive(id, newState, function (err, data) {
                 if (err) {
-                    // TODO: Decide Err and return
+                    res.json(new ErrorNotice("Item active status could not be updated.", 427847).toObject());
                 }
                 else {
-                    res.json(new SuccessNotice("Item is " + (newState ? 'Active' : 'Inactive'), 393904).toObject());
+                    res.json(new SuccessNotice("Item is now " + (newState ? 'active' : 'inactive'), 943399).toObject());
                 }
             });
         };
