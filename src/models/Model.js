@@ -17,7 +17,6 @@ var Model = /** @class */ (function () {
          *
          */
         this.getIds = function (parameters, callback) {
-            console.log(parameters);
             _this.model.find({}, '_id').exec(callback);
         };
         /**
@@ -30,7 +29,6 @@ var Model = /** @class */ (function () {
          * Returns an array of Models from a list of identifiers
          */
         this.getModels = function (ids, callback) {
-            console.log(ids);
             _this.model.find({
                 _id: {
                     $in: ids.map(function (id) { return mongoose.Types.ObjectId(id); })

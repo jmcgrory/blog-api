@@ -37,7 +37,7 @@ var schema = new mongoose.Schema({
         type: [ObjectId],
     },
     content: {
-        type: [Object],
+        type: String,
     },
     metaTitle: {
         type: String,

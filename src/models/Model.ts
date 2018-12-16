@@ -29,7 +29,6 @@ abstract class Model {
         parameters: any,
         callback: Function
     ): void => {
-        console.log(parameters);
         this.model.find({}, '_id').exec(callback);
     }
 
@@ -44,7 +43,6 @@ abstract class Model {
      * Returns an array of Models from a list of identifiers
      */
     public getModels = (ids: string[], callback: Function) => {
-        console.log(ids);
         this.model.find({
             _id: {
                 $in: ids.map((id) => mongoose.Types.ObjectId(id))
