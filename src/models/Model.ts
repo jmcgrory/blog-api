@@ -44,6 +44,7 @@ abstract class Model {
      * Returns an array of Models from a list of identifiers
      */
     public getModels = (ids: string[], callback: Function) => {
+        console.log(ids);
         this.model.find({
             _id: {
                 $in: ids.map((id) => mongoose.Types.ObjectId(id))

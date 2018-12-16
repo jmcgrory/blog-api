@@ -61,7 +61,8 @@ abstract class Router {
      * @todo handle errs
      */
     protected getIds = (req, res, next): void => {
-        console.log('query', req.query);
+        console.log(req.query);
+        // TODO: Handle params req.query
         const parameters = {};
         // TODO: Use Async?
         this.model.getIds(parameters, (err, data) => {
@@ -76,7 +77,7 @@ abstract class Router {
         const id = req.body.id;
         this.model.getModel(id, (err, data) => {
             console.log('[getModel]');
-            console.log(err);
+            console.log('error:', err);
             res.json(data);
         });
     }
@@ -86,10 +87,15 @@ abstract class Router {
      */
     protected getModels = (req, res, next): void => {
         console.log('[getModels]');
-        // TODO:
-        this.model.getModels([], (err, data) => {
-            res.json(data);
-        });
+        const idsString = req.query.ids;
+        console.log(req.query);
+        if (idsString && idsString.length) {
+            const ids = idsString.split(',');
+            this.model.getModels(ids, (err, data) => {
+                console.log('error:', err);
+                res.json(data);
+            });
+        }
     }
 
     /**

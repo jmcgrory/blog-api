@@ -47,7 +47,8 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.getIds = function (req, res, next) {
-            console.log('query', req.query);
+            console.log(req.query);
+            // TODO: Handle params req.query
             var parameters = {};
             // TODO: Use Async?
             _this.model.getIds(parameters, function (err, data) {
@@ -61,7 +62,7 @@ var Router = /** @class */ (function () {
             var id = req.body.id;
             _this.model.getModel(id, function (err, data) {
                 console.log('[getModel]');
-                console.log(err);
+                console.log('error:', err);
                 res.json(data);
             });
         };
@@ -70,10 +71,15 @@ var Router = /** @class */ (function () {
          */
         this.getModels = function (req, res, next) {
             console.log('[getModels]');
-            // TODO:
-            _this.model.getModels([], function (err, data) {
-                res.json(data);
-            });
+            var idsString = req.query.ids;
+            console.log(req.query);
+            if (idsString && idsString.length) {
+                var ids = idsString.split(',');
+                _this.model.getModels(ids, function (err, data) {
+                    console.log('error:', err);
+                    res.json(data);
+                });
+            }
         };
         /**
          * @todo handle errs

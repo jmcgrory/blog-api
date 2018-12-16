@@ -3,6 +3,8 @@ import { Model, ArticleModel } from '../../models';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
 
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 const schema = new mongoose.Schema({
     createdAt: {
         type: Date,
@@ -27,13 +29,13 @@ const schema = new mongoose.Schema({
         type: String,
     },
     image: {
-        type: String,
+        type: ObjectId,
     },
     categories: {
-        type: [String],
+        type: [ObjectId],
     },
     tags: {
-        type: [String],
+        type: [ObjectId],
     },
     content: {
         type: [Object],
