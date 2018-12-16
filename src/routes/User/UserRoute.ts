@@ -3,6 +3,7 @@ import { UserModel } from '../../models';
 import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
+import { ErrorNotice } from '../../notices';
 
 const schema = new mongoose.Schema({
     createdAt: {
@@ -31,8 +32,7 @@ const schema = new mongoose.Schema({
         required: true,
     },
     token: {
-        type: String,
-        required: true,
+        type: String
     }
 }, {
         collection: 'user'
@@ -50,17 +50,42 @@ class UserRoute extends Route {
     constructor() {
         super();
         this.model = this.getRouterModel();
+        this.bindRouteMethods();
     }
+
+    protected getCustomRouteMethods = (): RouteMethod[] => [
+        new RouteMethod('/authenticate', 'get', this.getUserByUsername)
+    ];
 
     protected getRouterModel = (): UserModel => new UserModel(User);
 
     /**
      * @todo
      */
-    public static authenticate = (id: string, callback: Function) => {
-        return Promise.resolve({ lol: 'data' });
+    private getUserByUsername = (req, res, next) => {
+        const errorNotice = new ErrorNotice(
+            'Login credentials are incorrect.',
+            283723,
+            'One or more fields could not be verified.'
+        );
+        const username = req.query.username;
+        const password = req.query.password;
+        this.model.getUserByUsername(username, (err, data) => {
+            if (err || !data) {
+                res.status(404).json(errorNotice.toObject());
+            } else {
+                this.model.comparePasswords(
+                    password,
+                    data.password,
+                    (err, data) => {
+                        if (err || !data) {
+                            res.status(401).json(errorNotice.toObject());
+                        }
+                        res.json(data);
+                    });
+            }
+        })
     }
-
 }
 
 export default UserRoute;

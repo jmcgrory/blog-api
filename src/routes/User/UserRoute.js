@@ -1,8 +1,10 @@
 import * as tslib_1 from "tslib";
 import Route from '../Route';
 import { UserModel } from '../../models';
+import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
+import { ErrorNotice } from '../../notices';
 var schema = new mongoose.Schema({
     createdAt: {
         type: Date,
@@ -30,8 +32,7 @@ var schema = new mongoose.Schema({
         required: true,
     },
     token: {
-        type: String,
-        required: true,
+        type: String
     }
 }, {
     collection: 'user'
@@ -43,17 +44,36 @@ var UserRoute = /** @class */ (function (_super) {
         var _this = _super.call(this) || this;
         _this.name = 'user';
         _this.useDefaultMethods = false;
+        _this.getCustomRouteMethods = function () { return [
+            new RouteMethod('/authenticate', 'get', _this.getUserByUsername)
+        ]; };
         _this.getRouterModel = function () { return new UserModel(User); };
+        /**
+         * @todo
+         */
+        _this.getUserByUsername = function (req, res, next) {
+            var errorNotice = new ErrorNotice('Login credentials are incorrect.', 283723, 'One or more fields could not be verified.');
+            var username = req.query.username;
+            var password = req.query.password;
+            _this.model.getUserByUsername(username, function (err, data) {
+                if (err || !data) {
+                    res.status(404).json(errorNotice.toObject());
+                }
+                else {
+                    _this.model.comparePasswords(password, data.password, function (err, data) {
+                        if (err || !data) {
+                            res.status(401).json(errorNotice.toObject());
+                        }
+                        res.json(data);
+                    });
+                }
+            });
+        };
         _this.model = _this.getRouterModel();
+        _this.bindRouteMethods();
         return _this;
     }
     UserRoute.base = '/user';
-    /**
-     * @todo
-     */
-    UserRoute.authenticate = function (id, callback) {
-        return Promise.resolve({ lol: 'data' });
-    };
     return UserRoute;
 }(Route));
 export default UserRoute;

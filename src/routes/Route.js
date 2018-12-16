@@ -26,17 +26,15 @@ var Router = /** @class */ (function () {
         this.getAuthentication = function () {
             return passport.authenticate('jwt', { session: false });
         };
-        this.getDefaultRouteMethods = function () {
-            return [
-                new RouteMethod('/ids', 'get', _this.getIds),
-                new RouteMethod('/get', 'get', _this.getModel),
-                new RouteMethod('/get-many', 'get', _this.getModels),
-                new RouteMethod('/save', 'put', _this.save, true),
-                new RouteMethod('/remove', 'delete', _this.remove, true),
-                new RouteMethod('/update', 'patch', _this.update, true),
-                new RouteMethod('/active', 'patch', _this.setActive, true)
-            ];
-        };
+        this.getDefaultRouteMethods = function () { return [
+            new RouteMethod('/ids', 'get', _this.getIds),
+            new RouteMethod('/get', 'get', _this.getModel),
+            new RouteMethod('/get-many', 'get', _this.getModels),
+            new RouteMethod('/save', 'put', _this.save, true),
+            new RouteMethod('/remove', 'delete', _this.remove, true),
+            new RouteMethod('/update', 'patch', _this.update, true),
+            new RouteMethod('/active', 'patch', _this.setActive, true)
+        ]; };
         this.getCustomRouteMethods = function () { return []; };
         this.getRouteMethods = function () {
             return tslib_1.__spread((_this.useDefaultMethods) ? _this.getDefaultRouteMethods() : [], _this.getCustomRouteMethods(), [

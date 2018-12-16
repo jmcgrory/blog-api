@@ -35,17 +35,15 @@ abstract class Router {
         return passport.authenticate('jwt', { session: false });
     }
 
-    private getDefaultRouteMethods = (): RouteMethod[] => {
-        return [
-            new RouteMethod('/ids', 'get', this.getIds),
-            new RouteMethod('/get', 'get', this.getModel),
-            new RouteMethod('/get-many', 'get', this.getModels),
-            new RouteMethod('/save', 'put', this.save, true),
-            new RouteMethod('/remove', 'delete', this.remove, true),
-            new RouteMethod('/update', 'patch', this.update, true),
-            new RouteMethod('/active', 'patch', this.setActive, true)
-        ];
-    }
+    private getDefaultRouteMethods = (): RouteMethod[] => [
+        new RouteMethod('/ids', 'get', this.getIds),
+        new RouteMethod('/get', 'get', this.getModel),
+        new RouteMethod('/get-many', 'get', this.getModels),
+        new RouteMethod('/save', 'put', this.save, true),
+        new RouteMethod('/remove', 'delete', this.remove, true),
+        new RouteMethod('/update', 'patch', this.update, true),
+        new RouteMethod('/active', 'patch', this.setActive, true)
+    ];
 
     protected getCustomRouteMethods = (): RouteMethod[] => [];
 
