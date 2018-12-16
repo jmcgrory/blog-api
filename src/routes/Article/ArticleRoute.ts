@@ -66,7 +66,7 @@ class ArticleRoute extends Route {
         this.bindRouteMethods();
     }
 
-    protected getRouterModel = (): ArticleModel => new ArticleModel(Article);
+    public getRouterModel = (): ArticleModel => new ArticleModel(Article);
 
 }
 

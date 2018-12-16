@@ -1,4 +1,5 @@
 import { Strategy, ExtractJwt } from 'passport-jwt';
+import { UserRoute } from '../routes';
 /**
  * Configures Passport
  */
@@ -10,17 +11,20 @@ var PassportControl = /** @class */ (function () {
         };
         this.use = function (passport) {
             passport.use(new Strategy(_this.options, function (payload, done) {
-                // TODO: Placeholder implementation
-                return done(null, { lol: 'okay' });
-                // UserRoute.authenticate(payload._id, (err, user) => {
-                //     if (err) {
-                //         return done(err, false); // If Error
-                //     } else if (user) {
-                //         return done(null, user); // If Found
-                //     } else {
-                //         return done(null, false); // If Not Found
-                //     }
-                // });
+                var router = new UserRoute();
+                var model = router.getRouterModel();
+                model.getModel(payload.id, function (err, user) {
+                    console.log(err, user);
+                    if (err) {
+                        return done(err, false); // If Error
+                    }
+                    else if (user) {
+                        return done(null, user); // If Found
+                    }
+                    else {
+                        return done(null, false); // If Not Found
+                    }
+                });
             }));
         };
         this.setOptions({

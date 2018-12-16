@@ -174,7 +174,7 @@ abstract class Router {
         });
     }
 
-    protected getRouterModel = (): Model => null;
+    public getRouterModel = (): Model => null;
 
     public getRouter = (): ExpressRouter => this.router;
 

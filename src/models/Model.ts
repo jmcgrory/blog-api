@@ -36,6 +36,7 @@ abstract class Model {
      * Returns a Model from its identifier
      */
     public getModel = (id: string, callback: Function) => {
+        console.log(id);
         this.model.findById(id).exec(callback);
     }
 
@@ -71,7 +72,7 @@ abstract class Model {
         id: string,
         callback: Function
     ): void => {
-        this.model.findByIdAndDelete(id).exec(callback);
+        this.model.deleteOne({ _id: id }).exec(callback);
     }
 
     /**
@@ -84,7 +85,8 @@ abstract class Model {
         newData: object,
         callback: Function
     ): void => {
-        this.model.findByIdAndUpdate(id, newData, callback);
+        console.log(id, newData);
+        this.model.updateOne({ _id: id }, newData).exec(callback);
     }
 
     /**
@@ -95,7 +97,7 @@ abstract class Model {
         isActive: boolean,
         callback: Function
     ): void => {
-        this.model.findByIdAndUpdate(id, {
+        this.model.updateOne({ _id: id }, {
             isActive: isActive
         }).exec(callback);
     }

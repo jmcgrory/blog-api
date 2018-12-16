@@ -1,6 +1,7 @@
 import { PassportStatic } from 'passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import JwtStrategyOptions from './JwtStrategyOptions';
+import { UserModel } from '../models';
 import { UserRoute } from '../routes';
 
 /**
@@ -25,18 +26,19 @@ class PassportControl {
     private use = (passport: PassportStatic): void => {
         passport.use(new Strategy(
             this.options,
-            (payload, done) => { // TODO: Maybe { _id }
-                // TODO: Placeholder implementation
-                return done(null, { lol: 'okay' });
-                // UserRoute.authenticate(payload._id, (err, user) => {
-                //     if (err) {
-                //         return done(err, false); // If Error
-                //     } else if (user) {
-                //         return done(null, user); // If Found
-                //     } else {
-                //         return done(null, false); // If Not Found
-                //     }
-                // });
+            (payload, done) => {
+                const router = new UserRoute();
+                const model = router.getRouterModel();
+                model.getModel(payload.id, (err, user) => {
+                    console.log(err, user);
+                    if (err) {
+                        return done(err, false); // If Error
+                    } else if (user) {
+                        return done(null, user); // If Found
+                    } else {
+                        return done(null, false); // If Not Found
+                    }
+                });
             }
         ))
     };

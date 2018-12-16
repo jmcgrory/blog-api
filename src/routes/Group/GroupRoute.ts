@@ -50,7 +50,7 @@ class GroupRoute extends Route {
         this.bindRouteMethods();
     }
 
-    protected getRouterModel = (): GroupModel => new GroupModel(Group);
+    public getRouterModel = (): GroupModel => new GroupModel(Group);
 
     protected getCustomRouteMethods = (): RouteMethod[] => [
         new RouteMethod('/get', 'get', this.getCategories),

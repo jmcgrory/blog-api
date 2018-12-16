@@ -4,6 +4,7 @@ import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
 import { ErrorNotice, SuccessNotice } from '../../notices';
+import * as jwt from 'jsonwebtoken';
 
 const schema = new mongoose.Schema({
     createdAt: {
@@ -54,10 +55,25 @@ class UserRoute extends Route {
     }
 
     protected getCustomRouteMethods = (): RouteMethod[] => [
-        new RouteMethod('/authenticate', 'get', this.getUserByUsername)
+        new RouteMethod('/authenticate', 'get', this.getUserByUsername),
+        new RouteMethod('/token', 'get', this.authenticateToken, true)
     ];
 
-    protected getRouterModel = (): UserModel => new UserModel(User);
+    public getRouterModel = (): UserModel => new UserModel(User);
+
+    private authenticateUser = (req, res, next) => {
+        // TODO: Use instead of getUserByUsername...
+    }
+
+    private authenticateToken = (req, res, next) => {
+        this.model.getUserByUsername(req.query.username, (err, data) => {
+            if (err) {
+                res.status(401);
+            } else {
+                res.json(new SuccessNotice('User Authenticated'));
+            }
+        });
+    }
 
     /**
      * @todo
@@ -85,13 +101,20 @@ class UserRoute extends Route {
                             this.model.updateUserToken(
                                 id,
                                 username,
-                                (err, data) => {
-                                    console.log(err, data);
+                                (err, { ok }) => {
+                                    if (err || !ok) {
+                                        res.status(500).json(errorNotice.toObject());
+                                    }
+                                    const newToken = jwt.sign({
+                                        id: id,
+                                        username: username
+                                    }, process.env.PASSPORT_SECRET);
+                                    res.json({
+                                        token: newToken,
+                                        username: username
+                                    });
                                 }
                             )
-                            res.json(new SuccessNotice(
-                                'User verified successfully.'
-                            ));
                         }
                     });
             }

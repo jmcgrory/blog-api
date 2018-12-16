@@ -1,7 +1,6 @@
 import * as tslib_1 from "tslib";
 import Model from '../Model';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
 var UserModel = /** @class */ (function (_super) {
     tslib_1.__extends(UserModel, _super);
     function UserModel() {
@@ -16,11 +15,7 @@ var UserModel = /** @class */ (function (_super) {
         _this.comparePasswords = function (plainPassword, password, callback) {
             bcrypt.compare(plainPassword, password, callback);
         };
-        _this.updateUserToken = function (id, username, callback) {
-            var newToken = jwt.sign({
-                id: id,
-                username: username
-            }, process.env.PASSPORT_SECRET);
+        _this.updateUserToken = function (id, newToken, callback) {
             _this.update(id, { token: newToken }, callback);
         };
         return _this;

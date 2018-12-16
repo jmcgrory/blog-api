@@ -5,6 +5,7 @@ import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
 import { ErrorNotice, SuccessNotice } from '../../notices';
+import * as jwt from 'jsonwebtoken';
 var schema = new mongoose.Schema({
     createdAt: {
         type: Date,
@@ -45,9 +46,23 @@ var UserRoute = /** @class */ (function (_super) {
         _this.name = 'user';
         _this.useDefaultMethods = false;
         _this.getCustomRouteMethods = function () { return [
-            new RouteMethod('/authenticate', 'get', _this.getUserByUsername)
+            new RouteMethod('/authenticate', 'get', _this.getUserByUsername),
+            new RouteMethod('/token', 'get', _this.authenticateToken, true)
         ]; };
         _this.getRouterModel = function () { return new UserModel(User); };
+        _this.authenticateUser = function (req, res, next) {
+            // TODO: Use instead of getUserByUsername...
+        };
+        _this.authenticateToken = function (req, res, next) {
+            _this.model.getUserByUsername(req.query.username, function (err, data) {
+                if (err) {
+                    res.status(401);
+                }
+                else {
+                    res.json(new SuccessNotice('User Authenticated'));
+                }
+            });
+        };
         /**
          * @todo
          */
@@ -66,10 +81,20 @@ var UserRoute = /** @class */ (function (_super) {
                             res.status(401).json(errorNotice.toObject());
                         }
                         else {
-                            _this.model.updateUserToken(id_1, username, function (err, data) {
-                                console.log(err, data);
+                            _this.model.updateUserToken(id_1, username, function (err, _a) {
+                                var ok = _a.ok;
+                                if (err || !ok) {
+                                    res.status(500).json(errorNotice.toObject());
+                                }
+                                var newToken = jwt.sign({
+                                    id: id_1,
+                                    username: username
+                                }, process.env.PASSPORT_SECRET);
+                                res.json({
+                                    token: newToken,
+                                    username: username
+                                });
                             });
-                            res.json(new SuccessNotice('User verified successfully.'));
                         }
                     });
                 }

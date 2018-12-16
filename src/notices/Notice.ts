@@ -27,12 +27,17 @@ abstract class Notice {
      * Returns Plain Notice Object
      */
     public toObject = (): object => {
-        return {
+        const plainObject = {
             title: `${this.title}`,
-            description: `${this.description}`,
-            code: this.code,
-            category: `${this.getCategory()}`,
+            category: `${this.getCategory()}`
         }
+        if (this.code) {
+            plainObject['code'] = this.code;
+        }
+        if (this.code) {
+            plainObject['description'] = this.description;
+        }
+        return plainObject;
     }
 
 }

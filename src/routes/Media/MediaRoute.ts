@@ -51,7 +51,7 @@ class MediaRoute extends Route {
         this.model = this.getRouterModel();
     }
 
-    protected getRouterModel = (): MediaModel => new MediaModel(Media);
+    public getRouterModel = (): MediaModel => new MediaModel(Media);
 
 }
 

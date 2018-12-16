@@ -1,6 +1,5 @@
 import Model from '../Model';
 import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
 
 class UserModel extends Model {
 
@@ -18,11 +17,7 @@ class UserModel extends Model {
         bcrypt.compare(plainPassword, password, callback);
     }
 
-    public updateUserToken = (id: string, username: string, callback): void => {
-        const newToken = jwt.sign({
-            id: id,
-            username: username
-        }, process.env.PASSPORT_SECRET);
+    public updateUserToken = (id: string, newToken: string, callback): void => {
         this.update(id, { token: newToken }, callback);
     }
 

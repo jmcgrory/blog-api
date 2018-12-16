@@ -13,12 +13,17 @@ var Notice = /** @class */ (function () {
          * Returns Plain Notice Object
          */
         this.toObject = function () {
-            return {
+            var plainObject = {
                 title: "" + _this.title,
-                description: "" + _this.description,
-                code: _this.code,
-                category: "" + _this.getCategory(),
+                category: "" + _this.getCategory()
             };
+            if (_this.code) {
+                plainObject['code'] = _this.code;
+            }
+            if (_this.code) {
+                plainObject['description'] = _this.description;
+            }
+            return plainObject;
         };
         this.title = title;
         this.code = code;

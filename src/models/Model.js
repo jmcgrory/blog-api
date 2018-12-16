@@ -23,6 +23,7 @@ var Model = /** @class */ (function () {
          * Returns a Model from its identifier
          */
         this.getModel = function (id, callback) {
+            console.log(id);
             _this.model.findById(id).exec(callback);
         };
         /**
@@ -49,7 +50,7 @@ var Model = /** @class */ (function () {
          * Removes within model from an identifier
          */
         this.remove = function (id, callback) {
-            _this.model.findByIdAndDelete(id).exec(callback);
+            _this.model.deleteOne({ _id: id }).exec(callback);
         };
         /**
          * Updates a model by identifier with new data
@@ -57,13 +58,14 @@ var Model = /** @class */ (function () {
          * Will ignore any _id, createdAt etc.
          */
         this.update = function (id, newData, callback) {
-            _this.model.findByIdAndUpdate(id, newData, callback);
+            console.log(id, newData);
+            _this.model.updateOne({ _id: id }, newData).exec(callback);
         };
         /**
          * Toggles a model's active state
          */
         this.setActive = function (id, isActive, callback) {
-            _this.model.findByIdAndUpdate(id, {
+            _this.model.updateOne({ _id: id }, {
                 isActive: isActive
             }).exec(callback);
         };
