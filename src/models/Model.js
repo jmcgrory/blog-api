@@ -57,7 +57,7 @@ var Model = /** @class */ (function () {
          * Will ignore any _id, createdAt etc.
          */
         this.update = function (id, newData, callback) {
-            _this.model.findByIdAndUpdate(id, newData).exec(callback);
+            _this.model.findByIdAndUpdate(id, newData, callback);
         };
         /**
          * Toggles a model's active state

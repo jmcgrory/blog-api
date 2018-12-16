@@ -1,12 +1,12 @@
 import Model from '../Model';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 
 class UserModel extends Model {
 
     protected params: Map<string, any> = new Map([]);
 
     public getUserByUsername = (username, callback): void => {
-        console.log(username);
         this.model.findOne({ username: username }, 'password').exec(callback);
     }
 
@@ -16,6 +16,14 @@ class UserModel extends Model {
 
     public comparePasswords = (plainPassword: string, password: string, callback): void => {
         bcrypt.compare(plainPassword, password, callback);
+    }
+
+    public updateUserToken = (id: string, username: string, callback): void => {
+        const newToken = jwt.sign({
+            id: id,
+            username: username
+        }, process.env.PASSPORT_SECRET);
+        this.update(id, { token: newToken }, callback);
     }
 
 }

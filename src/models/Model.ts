@@ -81,10 +81,10 @@ abstract class Model {
      */
     public update = (
         id: string,
-        newData: any,
+        newData: object,
         callback: Function
     ): void => {
-        this.model.findByIdAndUpdate(id, newData).exec(callback);
+        this.model.findByIdAndUpdate(id, newData, callback);
     }
 
     /**

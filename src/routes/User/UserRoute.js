@@ -4,7 +4,7 @@ import { UserModel } from '../../models';
 import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
-import { ErrorNotice } from '../../notices';
+import { ErrorNotice, SuccessNotice } from '../../notices';
 var schema = new mongoose.Schema({
     createdAt: {
         type: Date,
@@ -60,11 +60,17 @@ var UserRoute = /** @class */ (function (_super) {
                     res.status(404).json(errorNotice.toObject());
                 }
                 else {
+                    var id_1 = data._id;
                     _this.model.comparePasswords(password, data.password, function (err, data) {
                         if (err || !data) {
                             res.status(401).json(errorNotice.toObject());
                         }
-                        res.json(data);
+                        else {
+                            _this.model.updateUserToken(id_1, username, function (err, data) {
+                                console.log(err, data);
+                            });
+                            res.json(new SuccessNotice('User verified successfully.'));
+                        }
                     });
                 }
             });

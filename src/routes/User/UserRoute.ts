@@ -3,7 +3,7 @@ import { UserModel } from '../../models';
 import RouteMethod from '../RouteMethod';
 import * as moment from 'moment';
 import mongoose from 'mongoose';
-import { ErrorNotice } from '../../notices';
+import { ErrorNotice, SuccessNotice } from '../../notices';
 
 const schema = new mongoose.Schema({
     createdAt: {
@@ -74,14 +74,25 @@ class UserRoute extends Route {
             if (err || !data) {
                 res.status(404).json(errorNotice.toObject());
             } else {
+                const id = data._id;
                 this.model.comparePasswords(
                     password,
                     data.password,
                     (err, data) => {
                         if (err || !data) {
                             res.status(401).json(errorNotice.toObject());
+                        } else {
+                            this.model.updateUserToken(
+                                id,
+                                username,
+                                (err, data) => {
+                                    console.log(err, data);
+                                }
+                            )
+                            res.json(new SuccessNotice(
+                                'User verified successfully.'
+                            ));
                         }
-                        res.json(data);
                     });
             }
         })
