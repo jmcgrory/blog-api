@@ -68,7 +68,7 @@ class UserRoute extends Route {
     private authenticateToken = (req, res, next) => {
         this.model.getUserByUsername(req.query.username, (err, data) => {
             if (err) {
-                res.status(401);
+                res.json(new ErrorNotice('Authentication Error'));
             } else {
                 res.json(new SuccessNotice('User Authenticated'));
             }
@@ -79,6 +79,7 @@ class UserRoute extends Route {
      * @todo
      */
     private getUserByUsername = (req, res, next) => {
+        console.log('[getUserByUsername]');
         const errorNotice = new ErrorNotice(
             'Login credentials are incorrect.',
             283723,

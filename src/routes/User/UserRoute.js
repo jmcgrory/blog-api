@@ -56,7 +56,7 @@ var UserRoute = /** @class */ (function (_super) {
         _this.authenticateToken = function (req, res, next) {
             _this.model.getUserByUsername(req.query.username, function (err, data) {
                 if (err) {
-                    res.status(401);
+                    res.json(new ErrorNotice('Authentication Error'));
                 }
                 else {
                     res.json(new SuccessNotice('User Authenticated'));
@@ -67,6 +67,7 @@ var UserRoute = /** @class */ (function (_super) {
          * @todo
          */
         _this.getUserByUsername = function (req, res, next) {
+            console.log('[getUserByUsername]');
             var errorNotice = new ErrorNotice('Login credentials are incorrect.', 283723, 'One or more fields could not be verified.');
             var username = req.query.username;
             var password = req.query.password;

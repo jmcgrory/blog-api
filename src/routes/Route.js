@@ -49,7 +49,12 @@ var Router = /** @class */ (function () {
             var parameters = {};
             // TODO: Use Async?
             _this.model.getIds(parameters, function (err, data) {
-                res.json(data);
+                if (!data) {
+                    res.json([]);
+                }
+                else {
+                    res.json(data.map(function (object) { return object._id; }));
+                }
             });
         };
         /**

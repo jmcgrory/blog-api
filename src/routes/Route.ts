@@ -63,7 +63,11 @@ abstract class Router {
         const parameters = {};
         // TODO: Use Async?
         this.model.getIds(parameters, (err, data) => {
-            res.json(data);
+            if(!data) {
+                res.json([]);
+            } else {
+                res.json(data.map((object) => object._id));
+            }
         });
     }
 
