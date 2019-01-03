@@ -86,12 +86,13 @@ var Router = /** @class */ (function () {
          * @todo handle errs
          */
         this.save = function (req, res, next) {
-            _this.model.save(req.body, function (err, data) {
+            _this.model.save(req.body, function (err, _a) {
+                var _id = _a._id;
                 if (err) {
                     res.json(new ErrorNotice('This Item could not be saved.', 73282).toObject());
                 }
                 else {
-                    res.json(data);
+                    res.json({ id: _id });
                 }
             });
         };
@@ -114,7 +115,7 @@ var Router = /** @class */ (function () {
          */
         this.update = function (req, res, next) {
             var id = req.query.id;
-            var newData = req.query.body;
+            var newData = req.body;
             _this.model.update(id, newData, function (err, data) {
                 if (err) {
                     res.json(new ErrorNotice('Item could not be updated.', 923238).toObject());

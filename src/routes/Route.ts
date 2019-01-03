@@ -102,14 +102,14 @@ abstract class Router {
      * @todo handle errs
      */
     protected save = (req, res, next): void => {
-        this.model.save(req.body, (err, data) => {
+        this.model.save(req.body, (err, { _id }) => {
             if (err) {
                 res.json(new ErrorNotice(
                     'This Item could not be saved.',
                     73282
                 ).toObject());
             } else {
-                res.json(data);
+                res.json({ id: _id });
             }
         });
     }
@@ -138,7 +138,7 @@ abstract class Router {
      */
     protected update = (req, res, next): void => {
         const id = req.query.id;
-        const newData = req.query.body;
+        const newData = req.body;
         this.model.update(id, newData, (err, data) => {
             if (err) {
                 res.json(new ErrorNotice(
