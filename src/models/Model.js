@@ -47,9 +47,9 @@ var Model = /** @class */ (function () {
             newModel.save(callback);
         };
         /**
-         * Removes within model from an identifier
+         * Deletes model via identifier
          */
-        this.remove = function (id, callback) {
+        this.delete = function (id, callback) {
             _this.model.deleteOne({ _id: id }).exec(callback);
         };
         /**

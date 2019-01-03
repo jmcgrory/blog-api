@@ -66,9 +66,9 @@ abstract class Model {
     }
 
     /**
-     * Removes within model from an identifier
+     * Deletes model via identifier
      */
-    public remove = (
+    public delete = (
         id: string,
         callback: Function
     ): void => {
