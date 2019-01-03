@@ -40,7 +40,7 @@ abstract class Router {
         new RouteMethod('/get', 'get', this.getModel),
         new RouteMethod('/get-many', 'get', this.getModels),
         new RouteMethod('/save', 'put', this.save, true),
-        new RouteMethod('/remove', 'delete', this.remove, true),
+        new RouteMethod('/delete', 'delete', this.delete, true),
         new RouteMethod('/update', 'patch', this.update, true),
         new RouteMethod('/active', 'patch', this.setActive, true)
     ];
@@ -109,10 +109,7 @@ abstract class Router {
                     73282
                 ).toObject());
             } else {
-                res.json(new SuccessNotice(
-                    'Item successfully saved',
-                    393901
-                ).toObject());
+                res.json(data);
             }
         });
     }
@@ -120,16 +117,16 @@ abstract class Router {
     /**
      * @todo handle errs
      */
-    protected remove = (req, res, next): void => {
+    protected delete = (req, res, next): void => {
         const id = req.query.id;
-        this.model.remove(id, (err, data) => {
+        this.model.delete(id, (err, data) => {
             if (err) {
                 res.json(new ErrorNotice(
-                    'Item could not be removed.'
+                    'Item could not be deleted.'
                 ).toObject());
             } else {
                 res.json(new SuccessNotice(
-                    'Item successfully removed',
+                    'Item successfully deleted',
                     454555
                 ).toObject());
             }

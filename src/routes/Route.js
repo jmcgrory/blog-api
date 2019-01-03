@@ -31,7 +31,7 @@ var Router = /** @class */ (function () {
             new RouteMethod('/get', 'get', _this.getModel),
             new RouteMethod('/get-many', 'get', _this.getModels),
             new RouteMethod('/save', 'put', _this.save, true),
-            new RouteMethod('/remove', 'delete', _this.remove, true),
+            new RouteMethod('/delete', 'delete', _this.delete, true),
             new RouteMethod('/update', 'patch', _this.update, true),
             new RouteMethod('/active', 'patch', _this.setActive, true)
         ]; };
@@ -91,21 +91,21 @@ var Router = /** @class */ (function () {
                     res.json(new ErrorNotice('This Item could not be saved.', 73282).toObject());
                 }
                 else {
-                    res.json(new SuccessNotice('Item successfully saved', 393901).toObject());
+                    res.json(data);
                 }
             });
         };
         /**
          * @todo handle errs
          */
-        this.remove = function (req, res, next) {
+        this.delete = function (req, res, next) {
             var id = req.query.id;
-            _this.model.remove(id, function (err, data) {
+            _this.model.delete(id, function (err, data) {
                 if (err) {
-                    res.json(new ErrorNotice('Item could not be removed.').toObject());
+                    res.json(new ErrorNotice('Item could not be deleted.').toObject());
                 }
                 else {
-                    res.json(new SuccessNotice('Item successfully removed', 454555).toObject());
+                    res.json(new SuccessNotice('Item successfully deleted', 454555).toObject());
                 }
             });
         };

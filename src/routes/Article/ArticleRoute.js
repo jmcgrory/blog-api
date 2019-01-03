@@ -20,30 +20,38 @@ var schema = new mongoose.Schema({
     },
     title: {
         type: String,
+        default: ''
     },
     blurb: {
         type: String,
+        default: ''
     },
     slug: {
         type: String,
+        default: ''
     },
     image: {
         type: ObjectId,
     },
     categories: {
         type: [ObjectId],
+        default: []
     },
     tags: {
         type: [ObjectId],
+        default: []
     },
     content: {
         type: String,
+        default: ''
     },
     metaTitle: {
         type: String,
+        default: ''
     },
     metaDescription: {
         type: String,
+        default: ''
     },
 }, {
     collection: 'article'
