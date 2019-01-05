@@ -41,14 +41,15 @@ var Router = /** @class */ (function () {
                 new RouteMethod('/*', 'get', _this.routeMethodUnavailable),
             ]);
         };
+        this.resolveQueryParams = function (queryParams) {
+            return [];
+        };
         /**
          * @todo handle errs
          */
         this.getIds = function (req, res, next) {
-            // TODO: Handle params req.query
-            var parameters = {};
             // TODO: Use Async?
-            _this.model.getIds(parameters, function (err, data) {
+            _this.model.getIds(req.query, function (err, data) {
                 if (!data) {
                     res.json([]);
                 }

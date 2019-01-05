@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Query from "../lib/Query";
 /**
  * Base Model Class
  * Contains Core Model Behaviours
@@ -17,13 +18,13 @@ var Model = /** @class */ (function () {
          *
          */
         this.getIds = function (parameters, callback) {
-            _this.model.find({}, '_id').exec(callback);
+            var params = parameters ? new Query(parameters).getParams() : {};
+            _this.model.find(params, '_id').exec(callback);
         };
         /**
          * Returns a Model from its identifier
          */
         this.getModel = function (id, callback) {
-            console.log(id);
             _this.model.findById(id).exec(callback);
         };
         /**

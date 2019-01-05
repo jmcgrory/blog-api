@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Query from "../lib/Query";
 
 /**
  * Base Model Class
@@ -29,14 +30,14 @@ abstract class Model {
         parameters: any,
         callback: Function
     ): void => {
-        this.model.find({}, '_id').exec(callback);
+        const params =  parameters ? new Query(parameters).getParams() : {};
+        this.model.find(params, '_id').exec(callback);
     }
 
     /**
      * Returns a Model from its identifier
      */
     public getModel = (id: string, callback: Function) => {
-        console.log(id);
         this.model.findById(id).exec(callback);
     }
 

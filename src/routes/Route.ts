@@ -55,14 +55,16 @@ abstract class Router {
         ];
     }
 
+    private resolveQueryParams = (queryParams): object[] => {
+        return [];
+    }
+
     /**
      * @todo handle errs
      */
     protected getIds = (req, res, next): void => {
-        // TODO: Handle params req.query
-        const parameters = {};
         // TODO: Use Async?
-        this.model.getIds(parameters, (err, data) => {
+        this.model.getIds(req.query, (err, data) => {
             if(!data) {
                 res.json([]);
             } else {
